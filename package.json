@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "qa": "npm run build && next start --port 3100",
+    "start": "npx serve out",
+    "qa": "npm run build && npx serve out --port 3100",
     "lint": "eslint ."
   },
   "dependencies": {
