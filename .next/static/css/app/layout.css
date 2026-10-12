@@ -1,0 +1,1864 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/app/globals.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}/*
+! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com
+*//*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+input:where([type='button']),
+input:where([type='reset']),
+input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+.container {
+  width: 100%;
+}
+@media (min-width: 640px) {
+
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px) {
+
+  .container {
+    max-width: 1536px;
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.pointer-events-none {
+  pointer-events: none;
+}
+.pointer-events-auto {
+  pointer-events: auto;
+}
+.visible {
+  visibility: visible;
+}
+.invisible {
+  visibility: hidden;
+}
+.static {
+  position: static;
+}
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.sticky {
+  position: sticky;
+}
+.inset-0 {
+  inset: 0px;
+}
+.inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+.left-1\/2 {
+  left: 50%;
+}
+.top-0 {
+  top: 0px;
+}
+.top-1\/2 {
+  top: 50%;
+}
+.top-\[20vh\] {
+  top: 20vh;
+}
+.z-10 {
+  z-index: 10;
+}
+.z-20 {
+  z-index: 20;
+}
+.z-30 {
+  z-index: 30;
+}
+.z-40 {
+  z-index: 40;
+}
+.z-50 {
+  z-index: 50;
+}
+.z-0 {
+  z-index: 0;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.ml-0 {
+  margin-left: 0px;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-10 {
+  margin-top: 2.5rem;
+}
+.mt-12 {
+  margin-top: 3rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-5 {
+  margin-top: 1.25rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mt-7 {
+  margin-top: 1.75rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
+.mt-9 {
+  margin-top: 2.25rem;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.flex {
+  display: flex;
+}
+.table {
+  display: table;
+}
+.grid {
+  display: grid;
+}
+.hidden {
+  display: none;
+}
+.aspect-\[16\/9\] {
+  aspect-ratio: 16/9;
+}
+.h-0 {
+  height: 0px;
+}
+.h-\[1320vh\] {
+  height: 1320vh;
+}
+.h-\[1px\] {
+  height: 1px;
+}
+.h-\[400vh\] {
+  height: 400vh;
+}
+.h-\[620vh\] {
+  height: 620vh;
+}
+.h-\[780px\] {
+  height: 780px;
+}
+.h-full {
+  height: 100%;
+}
+.h-screen {
+  height: 100vh;
+}
+.max-h-\[34vh\] {
+  max-height: 34vh;
+}
+.min-h-\[140vh\] {
+  min-height: 140vh;
+}
+.min-h-\[180vh\] {
+  min-height: 180vh;
+}
+.min-h-\[220vh\] {
+  min-height: 220vh;
+}
+.min-h-\[400vh\] {
+  min-height: 400vh;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.w-0 {
+  width: 0px;
+}
+.w-10 {
+  width: 2.5rem;
+}
+.w-\[28\%\] {
+  width: 28%;
+}
+.w-\[780px\] {
+  width: 780px;
+}
+.w-full {
+  width: 100%;
+}
+.max-w-\[1600px\] {
+  max-width: 1600px;
+}
+.max-w-\[38rem\] {
+  max-width: 38rem;
+}
+.max-w-\[460px\] {
+  max-width: 460px;
+}
+.max-w-\[480px\] {
+  max-width: 480px;
+}
+.max-w-\[520px\] {
+  max-width: 520px;
+}
+.max-w-\[580px\] {
+  max-width: 580px;
+}
+.max-w-\[600px\] {
+  max-width: 600px;
+}
+.max-w-\[640px\] {
+  max-width: 640px;
+}
+.max-w-\[680px\] {
+  max-width: 680px;
+}
+.max-w-none {
+  max-width: none;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+.shrink {
+  flex-shrink: 1;
+}
+.shrink-0 {
+  flex-shrink: 0;
+}
+.grow {
+  flex-grow: 1;
+}
+.-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.translate-y-\[9vh\] {
+  --tw-translate-y: 9vh;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.resize {
+  resize: both;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-start {
+  align-items: flex-start;
+}
+.items-end {
+  align-items: flex-end;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.gap-5 {
+  gap: 1.25rem;
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+.gap-8 {
+  gap: 2rem;
+}
+.gap-\[14px\] {
+  gap: 14px;
+}
+.gap-\[7px\] {
+  gap: 7px;
+}
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.justify-self-end {
+  justify-self: end;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+.rounded {
+  border-radius: 0.25rem;
+}
+.border {
+  border-width: 1px;
+}
+.border-t {
+  border-top-width: 1px;
+}
+.border-white\/10 {
+  border-color: rgb(255 255 255 / 0.1);
+}
+.bg-\[\#101013\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 16 19 / var(--tw-bg-opacity, 1));
+}
+.bg-\[\#c8ff2e\]\/40 {
+  background-color: rgb(200 255 46 / 0.4);
+}
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.object-center {
+  -o-object-position: center;
+     object-position: center;
+}
+.object-top {
+  -o-object-position: top;
+     object-position: top;
+}
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-\[18px\] {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.pb-8 {
+  padding-bottom: 2rem;
+}
+.pb-\[40vh\] {
+  padding-bottom: 40vh;
+}
+.pb-\[9vh\] {
+  padding-bottom: 9vh;
+}
+.pt-10 {
+  padding-top: 2.5rem;
+}
+.pt-16 {
+  padding-top: 4rem;
+}
+.pt-24 {
+  padding-top: 6rem;
+}
+.pt-4 {
+  padding-top: 1rem;
+}
+.pt-\[13vh\] {
+  padding-top: 13vh;
+}
+.pt-\[26vh\] {
+  padding-top: 26vh;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.text-\[10px\] {
+  font-size: 10px;
+}
+.text-\[11\.5vw\] {
+  font-size: 11.5vw;
+}
+.text-\[11px\] {
+  font-size: 11px;
+}
+.text-\[12px\] {
+  font-size: 12px;
+}
+.text-\[13px\] {
+  font-size: 13px;
+}
+.text-\[13vw\] {
+  font-size: 13vw;
+}
+.text-\[14vw\] {
+  font-size: 14vw;
+}
+.text-\[15px\] {
+  font-size: 15px;
+}
+.text-\[16px\] {
+  font-size: 16px;
+}
+.text-\[26px\] {
+  font-size: 26px;
+}
+.text-\[28px\] {
+  font-size: 28px;
+}
+.text-\[3\.8vw\] {
+  font-size: 3.8vw;
+}
+.text-\[4\.2vw\] {
+  font-size: 4.2vw;
+}
+.text-\[4\.6vw\] {
+  font-size: 4.6vw;
+}
+.text-\[5vw\] {
+  font-size: 5vw;
+}
+.text-\[9px\] {
+  font-size: 9px;
+}
+.text-\[clamp\(1\.05rem\2c 1\.45vw\2c 1\.55rem\)\] {
+  font-size: clamp(1.05rem, 1.45vw, 1.55rem);
+}
+.text-\[clamp\(2\.4rem\2c 4\.4vw\2c 4\.4rem\)\] {
+  font-size: clamp(2.4rem, 4.4vw, 4.4rem);
+}
+.text-\[clamp\(2\.4rem\2c 4vw\2c 3\.8rem\)\] {
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+}
+.text-\[clamp\(2\.6rem\2c 4\.4vw\2c 4\.2rem\)\] {
+  font-size: clamp(2.6rem, 4.4vw, 4.2rem);
+}
+.font-black {
+  font-weight: 900;
+}
+.font-bold {
+  font-weight: 700;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.leading-\[0\.85\] {
+  line-height: 0.85;
+}
+.leading-\[0\.86\] {
+  line-height: 0.86;
+}
+.leading-\[0\.88\] {
+  line-height: 0.88;
+}
+.leading-\[0\.94\] {
+  line-height: 0.94;
+}
+.leading-\[1\.02\] {
+  line-height: 1.02;
+}
+.leading-\[1\.04\] {
+  line-height: 1.04;
+}
+.leading-\[1\.55\] {
+  line-height: 1.55;
+}
+.leading-none {
+  line-height: 1;
+}
+.leading-relaxed {
+  line-height: 1.625;
+}
+.tracking-\[0\.16em\] {
+  letter-spacing: 0.16em;
+}
+.tracking-\[0\.18em\] {
+  letter-spacing: 0.18em;
+}
+.tracking-\[0\.20em\] {
+  letter-spacing: 0.20em;
+}
+.tracking-\[0\.22em\] {
+  letter-spacing: 0.22em;
+}
+.tracking-\[0\.25em\] {
+  letter-spacing: 0.25em;
+}
+.tracking-\[0\.28em\] {
+  letter-spacing: 0.28em;
+}
+.tracking-\[0\.2em\] {
+  letter-spacing: 0.2em;
+}
+.tracking-\[0\.32em\] {
+  letter-spacing: 0.32em;
+}
+.tracking-\[0\.35em\] {
+  letter-spacing: 0.35em;
+}
+.tracking-\[0\.3em\] {
+  letter-spacing: 0.3em;
+}
+.text-\[\#6E6A62\] {
+  --tw-text-opacity: 1;
+  color: rgb(110 106 98 / var(--tw-text-opacity, 1));
+}
+.text-\[\#8E8A82\] {
+  --tw-text-opacity: 1;
+  color: rgb(142 138 130 / var(--tw-text-opacity, 1));
+}
+.text-\[\#A6A29A\] {
+  --tw-text-opacity: 1;
+  color: rgb(166 162 154 / var(--tw-text-opacity, 1));
+}
+.text-\[\#A6A29A\]\/70 {
+  color: rgb(166 162 154 / 0.7);
+}
+.text-\[\#C8FF2E\] {
+  --tw-text-opacity: 1;
+  color: rgb(200 255 46 / var(--tw-text-opacity, 1));
+}
+.text-\[\#EAE6DC\] {
+  --tw-text-opacity: 1;
+  color: rgb(234 230 220 / var(--tw-text-opacity, 1));
+}
+.text-\[\#F1EEE6\] {
+  --tw-text-opacity: 1;
+  color: rgb(241 238 230 / var(--tw-text-opacity, 1));
+}
+.text-\[\#c8ff2e\] {
+  --tw-text-opacity: 1;
+  color: rgb(200 255 46 / var(--tw-text-opacity, 1));
+}
+.text-bone {
+  --tw-text-opacity: 1;
+  color: rgb(244 241 234 / var(--tw-text-opacity, 1));
+}
+.text-white\/35 {
+  color: rgb(255 255 255 / 0.35);
+}
+.text-white\/45 {
+  color: rgb(255 255 255 / 0.45);
+}
+.text-white\/55 {
+  color: rgb(255 255 255 / 0.55);
+}
+.text-white\/75 {
+  color: rgb(255 255 255 / 0.75);
+}
+.underline {
+  text-decoration-line: underline;
+}
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.opacity-100 {
+  opacity: 1;
+}
+.opacity-55 {
+  opacity: 0.55;
+}
+.opacity-60 {
+  opacity: 0.6;
+}
+.opacity-70 {
+  opacity: 0.7;
+}
+.opacity-80 {
+  opacity: 0.8;
+}
+.opacity-90 {
+  opacity: 0.9;
+}
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline {
+  outline-style: solid;
+}
+.ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.duration-200 {
+  transition-duration: 200ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
+}
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.will-change-transform {
+  will-change: transform;
+}
+
+:root {
+  --ink: #060607;
+  --bone: #f4f1ea;
+  --accent: #c8ff2e;
+  --line: rgba(244, 241, 234, 0.12);
+}
+
+html {
+  background: var(--ink);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide development overlay badges during visual QA */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+}
+
+::-moz-selection {
+  background: var(--accent);
+  color: #060607;
+}
+
+::selection {
+  background: var(--accent);
+  color: #060607;
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* FOCUS — the shared optical state. --focus (0..1) is sampled from the
+   same journey that drives the 3D iris and published per frame.
+   Sharpness here IS aperture state: remove the object, lose the image.
+   Threshold variants let individual words lock in sequence
+   (.focus-t1/2/3 stage the identity lines). */
+.focus-name {
+  filter: blur(calc((1 - var(--focus, 0)) * 7px));
+}
+/* HERO FOCUS WINDOW — the name is the subject, the lens is the observer.
+   .hero-soft is the broad unresolved world; .hero-sharp is an identical
+   layer revealed only inside the bore (position + radius published per
+   frame from the rendered mechanism as --lens-x/--lens-y/--lens-r, so the
+   sharp region always coincides with the actual aperture). The feathered
+   mask edge reads as a focal plane, not a CSS circle. The window is
+   readable from the first frame (base 0.6: the bore is open at 0%, so a
+   faint window would read as broken). The soft floor reaches ~0.5px at
+   lock: 10% mostly sharp, 15% locked. Remove the lens and the
+   interaction disappears. */
+.hero-soft {
+  filter: blur(calc(7px - var(--focus, 0) * 6.5px));
+}
+.hero-sharp {
+  opacity: calc(0.6 + var(--focus, 0) * 0.4);
+  -webkit-mask-image: radial-gradient(
+    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
+    #000 50%,
+    transparent 74%
+  );
+  mask-image: radial-gradient(
+    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
+    #000 50%,
+    transparent 74%
+  );
+}
+.focus-t1 {
+  filter: blur(min(5px, max(0px, calc((0.5 - var(--focus, 0)) * 20px))));
+}
+.focus-t2 {
+  filter: blur(min(5px, max(0px, calc((0.7 - var(--focus, 0)) * 20px))));
+}
+.focus-t3 {
+  filter: blur(min(5px, max(0px, calc((0.9 - var(--focus, 0)) * 20px))));
+}
+.focus-img img {
+  filter: blur(calc((1 - var(--focus, 0)) * 6px));
+}
+/* A — side copy lives outside the bore: always sharp, never optical. */
+.project-copy-side {
+  z-index: 2;
+}
+.focus-word {
+  filter: blur(calc((1 - var(--focus, 0)) * 5px));
+}
+
+/* System depth strata (wow): ONE sharp plane at a time. Steep falloff
+   (k=8: neighbours at 0.125 distance read 0) so layers never stack as
+   ghosts. At spread=0 all depths read 0 — nothing leaks into RESOLVE. */
+.stratum {
+  opacity: min(
+    min(1, max(0, calc(var(--spread, 0) * 12 - 0.2))),
+    min(1, max(0, calc(1 - abs(var(--spread, 0) - var(--d)) * 12)))
+  );
+  filter: blur(max(0px, calc(abs(var(--spread, 0) - var(--d)) * 20px)));
+  will-change: opacity, filter;
+}
+
+.rm-only {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-name,
+  .focus-t1,
+  .focus-t2,
+  .focus-t3,
+  .hero-soft,
+  .focus-img img,
+  .focus-word {
+    filter: none;
+  }
+  .hero-sharp {
+    opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .o-slot {
+    display: none;
+  }
+  .o-fallback {
+    display: inline;
+  }
+  .rm-only {
+    display: block;
+  }
+}
+
+/* ── ABOUT / "WHO AM I?" ────────────────────────────────────────────────
+   Same isolation contract as .uts-* and .wf-*: namespaced, no scroll
+   physics, no shared selector, no shared typography. The section is a
+   normal sticky stage in the flow, so it needs nothing to be present or
+   absent — it is only ever painted inside its own box.
+
+   `--ab-focus` is the chapter's focus gate, the same optical idea the
+   hero uses (--focus) and the one term this frame is allowed on the stage:
+   the whole stage resolves out of a shallow blur as it arrives, the way a
+   camera finds focus on a subject it has just moved to. It is read by
+   .about-stage and nothing else, and it is clear long before the machine
+   settles — the machine is in motion for the whole of the chapter, which
+   lib/journey.ts drives and lib/about.ts places (see the note on
+   solveAboutDot in Scene/Aperture.tsx). */
+/* The blur is 7px at t 0 and gone by t 0.05 (lib/about.ts, aboutFocus) — the
+   machine's travel starts at 0.05, so the frame is fully resolved before
+   anything in it moves. */
+.about-stage {
+  filter: blur(calc((1 - var(--ab-focus, 1)) * 7px));
+  will-change: filter;
+}
+
+/* The question's origin is TOP-CENTRE, not centre: the chapter's transition
+   is the question leaving upward and the answer rising into the space it made.
+   Scaling toward the middle of the frame would pull the lockup down through the
+   middle of the answer instead. Its scale is written per frame from the
+   chapter's one clock (lib/choreography.ts) — this is the fixed half, so the
+   origin never has to be restated in JS and cannot be lost. */
+.about-q {
+  transform-origin: 50% 0%;
+  will-change: transform, opacity;
+}
+
+/* THE MARK IS THE HOOK, AND THE MACHINE IS ITS DOT.
+
+   One clip, two jobs, and it is the only thing standing between this chapter
+   and a machine sitting ON TOP of a glyph:
+
+     · the BOTTOM inset is the glyph's own punctuation dot, cut away at the
+       topmost inked row of that blob. `--q-top` is that row's position as a
+       fraction of this element's border box, measured off the live layout per
+       frame by lib/about.ts — never a font table. The "?" must not be able to
+       show a second dot: the machine is the dot (DOT_COVER sizes it to cover
+       that ink), so the glyph's own is deleted rather than covered.
+
+     · the TOP inset slides DOWN to meet it as `--q-m` runs 0 → 1, so the
+       visible band opens UPWARD out of the machine's own centre. That is the
+       causal order the chapter is about: the machine arrives, holds alone, and
+       then the question is built around it.
+
+   Nothing here moves the element — a transform would take the glyph's dot, and
+   with it the machine, out of the alignment this chapter is built on. The
+   defaults are the FINISHED state, so the question is correct before the first
+   frame of scroll and if the measurement never arrives. */
+.about-q-mark {
+  --q-top: 0.66;
+  --q-m: 1;
+  clip-path: inset(
+    calc(var(--q-top) * (1 - var(--q-m)) * 100%) 0
+    calc((1 - var(--q-top)) * 100%) 0
+  );
+}
+
+/* The words are the last thing written, and the only layer in the chapter that
+   is allowed a transform of its own — it is welded to nothing. */
+.about-q-line {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-stage {
+    filter: none;
+    will-change: auto;
+  }
+  .about-q {
+    will-change: auto;
+  }
+  .about-q-line {
+    will-change: auto;
+  }
+}
+
+/* Controlled studio stage — clean near-black + faint vignette. */
+.stage-bg {
+  background: radial-gradient(ellipse 75% 70% at 50% 46%, #111114 0%, var(--ink) 72%);
+}
+
+/* Controlled studio vignette — the only background treatment. It fades
+   out over the ivory hero (--vig published per frame from scroll
+   progress) and is full everywhere else. */
+.vignette {
+  opacity: var(--vig, 0);
+  background: radial-gradient(
+    ellipse 90% 75% at 50% 50%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+/* line-reveal masks: GSAP owns the transform (yPercent). Do NOT put a
+   CSS transform here — GSAP parses it as px and it double-applies
+   alongside the yPercent tween, hiding the line forever. */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+.reveal-line > span {
+  display: block;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  padding-bottom: 2px;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* The DOM is deliberately spare: the optical mechanism is the interface. */
+.hero-field {
+  isolation: isolate;
+  position: relative;
+}
+.hero-title { text-shadow: 0 0 34px rgba(244, 241, 234, 0.05); }
+
+
+/* Work is seen through the bore. The subject is sized to nest INSIDE
+   the glass (bore ≈ 450px at project holds) — its rim tucks just under
+   the iris shingles. Calm crops: the whole composition reads, not a
+   fragment. */
+.project-subject {
+  clip-path: circle(48% at 50% 50%);
+  isolation: isolate;
+  background: #101013;
+  transform: translateZ(0);
+  width: min(54vh, 470px);
+}
+.project-image { background: #101013; }
+.project-image img { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.project-subject-0 .project-image img { transform: scale(1.06) translateX(-2%); }
+.project-subject-1 .project-image img { transform: scale(1.1) translateY(-2%); }
+.project-subject-2 .project-image img { transform: scale(1.06) translateX(2%); }
+.project-shade {
+  background: linear-gradient(180deg, rgba(4, 4, 5, 0.08) 30%, rgba(4, 4, 5, 0.22) 55%, rgba(4, 4, 5, 0.55) 82%);
+}
+.project-copy { z-index: 2; }
+.project-actions {
+  opacity: 0.85;
+}
+
+.tech-plane {
+  width: min(78vw, 420px);
+  border-top: 1px solid rgba(244, 241, 234, 0.2);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.08);
+  padding: 0.8rem 1rem 1rem;
+  background: rgba(6, 6, 7, 0.14);
+}
+
+.resolve-copy {
+  border-left: 1px solid rgba(200, 255, 46, 0.55);
+  padding-left: 1.25rem;
+}
+
+/* PROJECTS INTRO — chapter word. The O slot is empty space the machine
+   occupies; the fallback O renders ONLY under reduced motion (static
+   poster), never alongside the object. */
+.intro-word {
+  font-size: clamp(120px, 13vw, 230px);
+  line-height: 0.9;
+}
+.o-slot {
+  width: 200px;
+}
+.o-fallback {
+  display: none;
+}
+
+/* ── UNDER THE SURFACE ────────────────────────────────────────────────
+   The isolated portal interlude between Projects and Systems. Nothing in
+   this block touches a shared selector: every rule is namespaced .uts-*
+   and every value is a pure function of the vars the scene publishes per
+   frame (--syscap / --tunnel), so it is deterministic, it reverses
+   exactly on reverse scroll, and it is inert everywhere else on the page.
+   No scroll physics, no global typography, no shared colour.
+
+   The reveal itself is NOT here — it is geometry, in Scene/Aperture.tsx.
+   This layer carries the single chapter label and nothing else: the four
+   architecture layers are planes inside the bore at real Z, so they are
+   drawn by the same canvas as the machine (which sits above `main` in
+   z-order) and can be occluded by the housing on the way out. */
+.uts-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Present only while the chapter is live: the caption window before
+     entry (--syscap) OR the interior window (--tunnel). */
+  opacity: max(var(--syscap, 0), var(--tunnel, 0));
+}
+
+/* Chapter label. Small, mono, existing Meta voice — never a hero title.
+   It rides the same fixed stage as everything else in the chapter, and
+   --syscap is held at 0 until the previous project has fully resolved,
+   so it can never appear over a leaving scene. */
+.uts-cap {
+  position: absolute;
+  left: 50%;
+  top: 12vh;
+  transform: translateX(-50%);
+  opacity: var(--syscap, 0);
+  will-change: opacity;
+}
+
+/* Reduced motion: the scroll choreography never runs, so the chapter
+   states the same architecture as a static plate (the .rm-only pattern).
+   The plate sits in a right-hand column, clear of the instrument: under
+   reduced motion the aperture's forced state parks the machine at dead
+   centre and the canvas is painted above `main`. It also clears the
+   Projects-intro chapter word, which is `fixed`.
+   It is a right-hand column, not a centred one: under reduced motion the
+   aperture's forced state parks the instrument at dead centre and the
+   canvas is painted above `main`, so centred content would sit under it.
+   This is the same left/right split the project scenes already use. */
+.uts-static {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uts-static {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: min(420px, 30vw);
+    margin-left: auto;
+    margin-right: max(2vw, 1rem);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+    text-align: left;
+  }
+}
+
+/* ── THE WAFER CHAPTER ─────────────────────────────────────────────────
+   Same isolation contract as .uts-*: nothing in this block touches a shared
+   selector, no scroll physics, no global typography, no shared colour. Every
+   value is a pure function of one var the scene publishes per frame
+   (--wfcap), so it is deterministic, it reverses exactly on reverse scroll,
+   and it is inert everywhere else on the page.
+
+   The reveal itself is NOT here. The plate, the wafer, the die array and the
+   four system regions are geometry, in Scene/Wafer.tsx — because DOM lives in
+   `main` (z-10) UNDER the canvas (z-30), overlaid labels could never recede
+   with perspective or be occluded, and would always read as cards printed on
+   one disc. This layer carries the single chapter caption and nothing else. */
+.wf-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--wfcap, 0);
+}
+
+/* Chapter caption. Small, mono, the existing Meta voice — never a hero title.
+   --wfcap is published per frame from the same smoothed journey value that
+   flies the camera, so the label and the plate it names arrive together. */
+.wf-cap {
+  position: absolute;
+  left: 50%;
+  top: 12vh;
+  transform: translateX(-50%);
+  will-change: opacity;
+}
+
+/* ── THE FINAL FOOTER ──────────────────────────────────────────────────
+   Same isolation contract as .uts-* and .wf-*: namespaced, no scroll
+   physics, no shared selector, one var (--fcap) published per frame by the
+   same smoothed journey value that carries the instrument across to the
+   left. Deterministic, reverses exactly, inert everywhere else on the page.
+
+   It exists because the block used to ride an `.orbit-stage` enter/exit
+   tween, whose scrubbed exit faded the contact out again at the very last
+   frame — the one frame that has to hold. The camera and the copy are now
+   driven by the same keyframe list, so they arrive together. */
+.ft-stage {
+  opacity: var(--fcap, 0);
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-stage {
+    opacity: 1;
+    will-change: auto;
+  }
+}
+
+/* Reduced motion: state the same four regions as a static plate. */
+.wf-static {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wf-static {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: min(420px, 30vw);
+    margin-left: auto;
+    margin-right: max(2vw, 1rem);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 767px) {
+  .wf-static {
+    width: min(78vw, 420px);
+  }
+}
+
+/* Removed: ornamental grid, concentric DOM circles, and HUD-style labels.
+   They made the instrument feel like decoration instead of the cause. */
+
+.project-subject::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, 0.18), inset 0 0 80px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .project-subject { width: min(92vw, 470px); }
+  .project-copy { left: 13%; right: 13%; bottom: 15%; }
+}
+
+.hover\:text-\[\#B8B4AC\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(184 180 172 / var(--tw-text-opacity, 1));
+}
+
+.hover\:opacity-100:hover {
+  opacity: 1;
+}
+
+.hover\:opacity-90:hover {
+  opacity: 0.9;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+.focus\:fixed:focus {
+  position: fixed;
+}
+
+.focus\:left-2:focus {
+  left: 0.5rem;
+}
+
+.focus\:top-2:focus {
+  top: 0.5rem;
+}
+
+.focus\:z-\[100\]:focus {
+  z-index: 100;
+}
+
+.focus\:bg-\[\#c8ff2e\]:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 255 46 / var(--tw-bg-opacity, 1));
+}
+
+.focus\:px-4:focus {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.focus\:py-2:focus {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.focus\:text-black:focus {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
+  .sm\:gap-16 {
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .md\:ml-\[40px\] {
+    margin-left: 40px;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:max-w-none {
+    max-width: none;
+  }
+
+  .md\:-translate-y-\[2vh\] {
+    --tw-translate-y: -2vh;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-\[1fr_38\%\] {
+    grid-template-columns: 1fr 38%;
+  }
+
+  .md\:grid-cols-\[38\%_1fr\] {
+    grid-template-columns: 38% 1fr;
+  }
+
+  .md\:gap-0 {
+    gap: 0px;
+  }
+
+  .md\:gap-8 {
+    gap: 2rem;
+  }
+
+  .md\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .md\:pb-0 {
+    padding-bottom: 0px;
+  }
+
+  .md\:pl-\[12vw\] {
+    padding-left: 12vw;
+  }
+
+  .md\:pt-20 {
+    padding-top: 5rem;
+  }
+
+  .md\:text-\[1\.1vw\] {
+    font-size: 1.1vw;
+  }
+
+  .md\:text-\[1\.3vw\] {
+    font-size: 1.3vw;
+  }
+
+  .md\:text-\[1\.5vw\] {
+    font-size: 1.5vw;
+  }
+
+  .md\:text-\[1\.7vw\] {
+    font-size: 1.7vw;
+  }
+
+  .md\:text-\[17px\] {
+    font-size: 17px;
+  }
+
+  .md\:text-\[3vw\] {
+    font-size: 3vw;
+  }
+
+  .md\:text-\[5\.6vw\] {
+    font-size: 5.6vw;
+  }
+}
+

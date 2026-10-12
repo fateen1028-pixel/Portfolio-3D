@@ -1,0 +1,495 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #060607;
+  --bone: #f4f1ea;
+  --accent: #c8ff2e;
+  --line: rgba(244, 241, 234, 0.12);
+}
+
+html {
+  background: var(--ink);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide development overlay badges during visual QA */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+}
+
+::selection {
+  background: var(--accent);
+  color: #060607;
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* FOCUS — the shared optical state. --focus (0..1) is sampled from the
+   same journey that drives the 3D iris and published per frame.
+   Sharpness here IS aperture state: remove the object, lose the image.
+   Threshold variants let individual words lock in sequence
+   (.focus-t1/2/3 stage the identity lines). */
+.focus-name {
+  filter: blur(calc((1 - var(--focus, 0)) * 7px));
+}
+/* HERO FOCUS WINDOW — the name is the subject, the lens is the observer.
+   .hero-soft is the broad unresolved world; .hero-sharp is an identical
+   layer revealed only inside the bore (position + radius published per
+   frame from the rendered mechanism as --lens-x/--lens-y/--lens-r, so the
+   sharp region always coincides with the actual aperture). The feathered
+   mask edge reads as a focal plane, not a CSS circle. The window is
+   readable from the first frame (base 0.6: the bore is open at 0%, so a
+   faint window would read as broken). The soft floor reaches ~0.5px at
+   lock: 10% mostly sharp, 15% locked. Remove the lens and the
+   interaction disappears. */
+.hero-soft {
+  filter: blur(calc(7px - var(--focus, 0) * 6.5px));
+}
+.hero-sharp {
+  opacity: calc(0.6 + var(--focus, 0) * 0.4);
+  -webkit-mask-image: radial-gradient(
+    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
+    #000 50%,
+    transparent 74%
+  );
+  mask-image: radial-gradient(
+    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
+    #000 50%,
+    transparent 74%
+  );
+}
+.focus-t1 {
+  filter: blur(min(5px, max(0px, calc((0.5 - var(--focus, 0)) * 20px))));
+}
+.focus-t2 {
+  filter: blur(min(5px, max(0px, calc((0.7 - var(--focus, 0)) * 20px))));
+}
+.focus-t3 {
+  filter: blur(min(5px, max(0px, calc((0.9 - var(--focus, 0)) * 20px))));
+}
+.focus-img img {
+  filter: blur(calc((1 - var(--focus, 0)) * 6px));
+}
+/* A — side copy lives outside the bore: always sharp, never optical. */
+.project-copy-side {
+  z-index: 2;
+}
+.focus-word {
+  filter: blur(calc((1 - var(--focus, 0)) * 5px));
+}
+
+/* System depth strata (wow): ONE sharp plane at a time. Steep falloff
+   (k=8: neighbours at 0.125 distance read 0) so layers never stack as
+   ghosts. At spread=0 all depths read 0 — nothing leaks into RESOLVE. */
+.stratum {
+  opacity: min(
+    min(1, max(0, calc(var(--spread, 0) * 12 - 0.2))),
+    min(1, max(0, calc(1 - abs(var(--spread, 0) - var(--d)) * 12)))
+  );
+  filter: blur(max(0px, calc(abs(var(--spread, 0) - var(--d)) * 20px)));
+  will-change: opacity, filter;
+}
+
+.rm-only {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-name,
+  .focus-t1,
+  .focus-t2,
+  .focus-t3,
+  .hero-soft,
+  .focus-img img,
+  .focus-word {
+    filter: none;
+  }
+  .hero-sharp {
+    opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .o-slot {
+    display: none;
+  }
+  .o-fallback {
+    display: inline;
+  }
+  .rm-only {
+    display: block;
+  }
+}
+
+/* ── ABOUT / "WHO AM I?" ────────────────────────────────────────────────
+   Same isolation contract as .uts-* and .wf-*: namespaced, no scroll
+   physics, no shared selector, no shared typography. The section is a
+   normal sticky stage in the flow, so it needs nothing to be present or
+   absent — it is only ever painted inside its own box.
+
+   `--ab-focus` is the chapter's focus gate, the same optical idea the
+   hero uses (--focus) and the one term this frame is allowed on the stage:
+   the whole stage resolves out of a shallow blur as it arrives, the way a
+   camera finds focus on a subject it has just moved to. It is read by
+   .about-stage and nothing else, and it is clear long before the machine
+   settles — the machine is in motion for the whole of the chapter, which
+   lib/journey.ts drives and lib/about.ts places (see the note on
+   solveAboutDot in Scene/Aperture.tsx). */
+/* The blur is 7px at t 0 and gone by t 0.05 (lib/about.ts, aboutFocus) — the
+   machine's travel starts at 0.05, so the frame is fully resolved before
+   anything in it moves. */
+.about-stage {
+  filter: blur(calc((1 - var(--ab-focus, 1)) * 7px));
+  will-change: filter;
+}
+
+/* The question's origin is TOP-CENTRE, not centre: the chapter's transition
+   is the question leaving upward and the answer rising into the space it made.
+   Scaling toward the middle of the frame would pull the lockup down through the
+   middle of the answer instead. Its scale is written per frame from the
+   chapter's one clock (lib/choreography.ts) — this is the fixed half, so the
+   origin never has to be restated in JS and cannot be lost. */
+.about-q {
+  transform-origin: 50% 0%;
+  will-change: transform, opacity;
+}
+
+/* THE MARK IS THE HOOK, AND THE MACHINE IS ITS DOT.
+
+   One clip, two jobs, and it is the only thing standing between this chapter
+   and a machine sitting ON TOP of a glyph:
+
+     · the BOTTOM inset is the glyph's own punctuation dot, cut away at the
+       topmost inked row of that blob. `--q-top` is that row's position as a
+       fraction of this element's border box, measured off the live layout per
+       frame by lib/about.ts — never a font table. The "?" must not be able to
+       show a second dot: the machine is the dot (DOT_COVER sizes it to cover
+       that ink), so the glyph's own is deleted rather than covered.
+
+     · the TOP inset slides DOWN to meet it as `--q-m` runs 0 → 1, so the
+       visible band opens UPWARD out of the machine's own centre. That is the
+       causal order the chapter is about: the machine arrives, holds alone, and
+       then the question is built around it.
+
+   Nothing here moves the element — a transform would take the glyph's dot, and
+   with it the machine, out of the alignment this chapter is built on. The
+   defaults are the FINISHED state, so the question is correct before the first
+   frame of scroll and if the measurement never arrives. */
+.about-q-mark {
+  --q-top: 0.66;
+  --q-m: 1;
+  clip-path: inset(
+    calc(var(--q-top) * (1 - var(--q-m)) * 100%) 0
+    calc((1 - var(--q-top)) * 100%) 0
+  );
+}
+
+/* The words are the last thing written, and the only layer in the chapter that
+   is allowed a transform of its own — it is welded to nothing. */
+.about-q-line {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-stage {
+    filter: none;
+    will-change: auto;
+  }
+  .about-q {
+    will-change: auto;
+  }
+  .about-q-line {
+    will-change: auto;
+  }
+}
+
+/* Controlled studio stage — clean near-black + faint vignette. */
+.stage-bg {
+  background: radial-gradient(ellipse 75% 70% at 50% 46%, #111114 0%, var(--ink) 72%);
+}
+
+/* Controlled studio vignette — the only background treatment. It fades
+   out over the ivory hero (--vig published per frame from scroll
+   progress) and is full everywhere else. */
+.vignette {
+  opacity: var(--vig, 0);
+  background: radial-gradient(
+    ellipse 90% 75% at 50% 50%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+/* line-reveal masks: GSAP owns the transform (yPercent). Do NOT put a
+   CSS transform here — GSAP parses it as px and it double-applies
+   alongside the yPercent tween, hiding the line forever. */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+.reveal-line > span {
+  display: block;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  padding-bottom: 2px;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* The DOM is deliberately spare: the optical mechanism is the interface. */
+.hero-field {
+  isolation: isolate;
+  position: relative;
+}
+.hero-title { text-shadow: 0 0 34px rgba(244, 241, 234, 0.05); }
+
+
+/* Work is seen through the bore. The subject is sized to nest INSIDE
+   the glass (bore ≈ 450px at project holds) — its rim tucks just under
+   the iris shingles. Calm crops: the whole composition reads, not a
+   fragment. */
+.project-subject {
+  clip-path: circle(48% at 50% 50%);
+  isolation: isolate;
+  background: #101013;
+  transform: translateZ(0);
+  width: min(54vh, 470px);
+}
+.project-image { background: #101013; }
+.project-image img { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.project-subject-0 .project-image img { transform: scale(1.06) translateX(-2%); }
+.project-subject-1 .project-image img { transform: scale(1.1) translateY(-2%); }
+.project-subject-2 .project-image img { transform: scale(1.06) translateX(2%); }
+.project-shade {
+  background: linear-gradient(180deg, rgba(4, 4, 5, 0.08) 30%, rgba(4, 4, 5, 0.22) 55%, rgba(4, 4, 5, 0.55) 82%);
+}
+.project-copy { z-index: 2; }
+.project-actions {
+  opacity: 0.85;
+}
+
+.tech-plane {
+  width: min(78vw, 420px);
+  border-top: 1px solid rgba(244, 241, 234, 0.2);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.08);
+  padding: 0.8rem 1rem 1rem;
+  background: rgba(6, 6, 7, 0.14);
+}
+
+.resolve-copy {
+  border-left: 1px solid rgba(200, 255, 46, 0.55);
+  padding-left: 1.25rem;
+}
+
+/* PROJECTS INTRO — chapter word. The O slot is empty space the machine
+   occupies; the fallback O renders ONLY under reduced motion (static
+   poster), never alongside the object. */
+.intro-word {
+  font-size: clamp(120px, 13vw, 230px);
+  line-height: 0.9;
+}
+.o-slot {
+  width: 200px;
+}
+.o-fallback {
+  display: none;
+}
+
+/* ── UNDER THE SURFACE ────────────────────────────────────────────────
+   The isolated portal interlude between Projects and Systems. Nothing in
+   this block touches a shared selector: every rule is namespaced .uts-*
+   and every value is a pure function of the vars the scene publishes per
+   frame (--syscap / --tunnel), so it is deterministic, it reverses
+   exactly on reverse scroll, and it is inert everywhere else on the page.
+   No scroll physics, no global typography, no shared colour.
+
+   The reveal itself is NOT here — it is geometry, in Scene/Aperture.tsx.
+   This layer carries the single chapter label and nothing else: the four
+   architecture layers are planes inside the bore at real Z, so they are
+   drawn by the same canvas as the machine (which sits above `main` in
+   z-order) and can be occluded by the housing on the way out. */
+.uts-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Present only while the chapter is live: the caption window before
+     entry (--syscap) OR the interior window (--tunnel). */
+  opacity: max(var(--syscap, 0), var(--tunnel, 0));
+}
+
+/* Chapter label. Small, mono, existing Meta voice — never a hero title.
+   It rides the same fixed stage as everything else in the chapter, and
+   --syscap is held at 0 until the previous project has fully resolved,
+   so it can never appear over a leaving scene. */
+.uts-cap {
+  position: absolute;
+  left: 50%;
+  top: 12vh;
+  transform: translateX(-50%);
+  opacity: var(--syscap, 0);
+  will-change: opacity;
+}
+
+/* Reduced motion: the scroll choreography never runs, so the chapter
+   states the same architecture as a static plate (the .rm-only pattern).
+   The plate sits in a right-hand column, clear of the instrument: under
+   reduced motion the aperture's forced state parks the machine at dead
+   centre and the canvas is painted above `main`. It also clears the
+   Projects-intro chapter word, which is `fixed`.
+   It is a right-hand column, not a centred one: under reduced motion the
+   aperture's forced state parks the instrument at dead centre and the
+   canvas is painted above `main`, so centred content would sit under it.
+   This is the same left/right split the project scenes already use. */
+.uts-static {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uts-static {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: min(420px, 30vw);
+    margin-left: auto;
+    margin-right: max(2vw, 1rem);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+    text-align: left;
+  }
+}
+
+/* ── THE WAFER CHAPTER ─────────────────────────────────────────────────
+   Same isolation contract as .uts-*: nothing in this block touches a shared
+   selector, no scroll physics, no global typography, no shared colour. Every
+   value is a pure function of one var the scene publishes per frame
+   (--wfcap), so it is deterministic, it reverses exactly on reverse scroll,
+   and it is inert everywhere else on the page.
+
+   The reveal itself is NOT here. The plate, the wafer, the die array and the
+   four system regions are geometry, in Scene/Wafer.tsx — because DOM lives in
+   `main` (z-10) UNDER the canvas (z-30), overlaid labels could never recede
+   with perspective or be occluded, and would always read as cards printed on
+   one disc. This layer carries the single chapter caption and nothing else. */
+.wf-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--wfcap, 0);
+}
+
+/* Chapter caption. Small, mono, the existing Meta voice — never a hero title.
+   --wfcap is published per frame from the same smoothed journey value that
+   flies the camera, so the label and the plate it names arrive together. */
+.wf-cap {
+  position: absolute;
+  left: 50%;
+  top: 12vh;
+  transform: translateX(-50%);
+  will-change: opacity;
+}
+
+/* ── THE FINAL FOOTER ──────────────────────────────────────────────────
+   Same isolation contract as .uts-* and .wf-*: namespaced, no scroll
+   physics, no shared selector, one var (--fcap) published per frame by the
+   same smoothed journey value that carries the instrument across to the
+   left. Deterministic, reverses exactly, inert everywhere else on the page.
+
+   It exists because the block used to ride an `.orbit-stage` enter/exit
+   tween, whose scrubbed exit faded the contact out again at the very last
+   frame — the one frame that has to hold. The camera and the copy are now
+   driven by the same keyframe list, so they arrive together. */
+.ft-stage {
+  opacity: var(--fcap, 0);
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-stage {
+    opacity: 1;
+    will-change: auto;
+  }
+}
+
+/* Reduced motion: state the same four regions as a static plate. */
+.wf-static {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wf-static {
+    display: flex;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: min(420px, 30vw);
+    margin-left: auto;
+    margin-right: max(2vw, 1rem);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 767px) {
+  .wf-static {
+    width: min(78vw, 420px);
+  }
+}
+
+/* Removed: ornamental grid, concentric DOM circles, and HUD-style labels.
+   They made the instrument feel like decoration instead of the cause. */
+
+.project-subject::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, 0.18), inset 0 0 80px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .project-subject { width: min(92vw, 470px); }
+  .project-copy { left: 13%; right: 13%; bottom: 15%; }
+}
