@@ -163,17 +163,27 @@ const KEYS: Key[] = [
   // Phase 1 FROZEN 0.000-0.011 | Phase 2 STIR 0.011-0.034
   // Phase 3 ENTER  0.034-0.067 | Phase 4 SETTLE 0.067-0.092
   // spread=0 throughout; iris leads position by one phase.
-  { p:0.0, state:{x:8.80,y:-0.05,s:1.28,iris:0.72,focus:1.0,spread:0.0,camZ:10.80,glow:0.50,camY:0.35,tilt:-0.10,key:3.20}, rot:0.000 },
-  { p:0.007291, state:{x:8.79,y:-0.05,s:1.28,iris:0.73,focus:1.0,spread:0.0,camZ:10.80,glow:0.51,camY:0.35,tilt:-0.10,key:3.20}, rot:0.016 },
-  { p:0.014582, state:{x:8.76,y:-0.05,s:1.28,iris:0.76,focus:1.0,spread:0.0,camZ:10.78,glow:0.52,camY:0.35,tilt:-0.10,key:3.25}, rot:0.050 },
-  { p:0.021873, state:{x:8.68,y:-0.05,s:1.28,iris:0.79,focus:1.0,spread:0.0,camZ:10.74,glow:0.54,camY:0.36,tilt:-0.10,key:3.28}, rot:0.090 },
-  { p:0.029165, state:{x:8.44,y:-0.05,s:1.29,iris:0.82,focus:1.0,spread:0.0,camZ:10.62,glow:0.56,camY:0.36,tilt:-0.10,key:3.32}, rot:0.158 },
-  { p:0.036456, state:{x:8.18,y:-0.05,s:1.29,iris:0.85,focus:1.0,spread:0.0,camZ:10.50,glow:0.58,camY:0.37,tilt:-0.11,key:3.38}, rot:0.216 },
-  { p:0.043746, state:{x:7.95,y:-0.05,s:1.28,iris:0.87,focus:1.0,spread:0.0,camZ:10.38,glow:0.59,camY:0.37,tilt:-0.11,key:3.42}, rot:0.266 },
-  { p:0.047392, state:{x:7.82,y:-0.05,s:1.28,iris:0.88,focus:1.0,spread:0.0,camZ:10.32,glow:0.60,camY:0.38,tilt:-0.11,key:3.45}, rot:0.288 },
-  { p:0.054683, state:{x:7.62,y:-0.05,s:1.27,iris:0.90,focus:1.0,spread:0.0,camZ:10.22,glow:0.60,camY:0.38,tilt:-0.11,key:3.48}, rot:0.324 },
-  { p:0.056324, state:{x:6.20,y:-0.03,s:1.10,iris:0.85,focus:0.92,spread:0.0,camZ:10.20,glow:0.55,camY:0.39,tilt:-0.11,key:3.30}, rot:0.468 },
-  { p:0.059969, state:{x:4.40,y:-0.02,s:0.98,iris:0.80,focus:0.85,spread:0.0,camZ:10.20,glow:0.50,camY:0.40,tilt:-0.11,key:3.15}, rot:0.648 },
+  //
+  // THE OBJECT IS IN THE FIRST FRAME. It used to open at x 8.80 with the
+  // camera at z 10.80 / fov 42 — half-width there is only ~6.4 units, so the
+  // instrument sat entirely off the right edge and the load screen was a
+  // black poster with a name on it. x 4.60 puts it in the right-hand third
+  // with its rim cropped by the frame, which is what "monumental" needs: the
+  // subject is too big for the frame rather than merely absent from it.
+  // HeroScan's axis already reads --lens-x per frame, so bringing the lens on
+  // screen is what gives the axis a real run from the identity's edge to a
+  // real target.
+  { p:0.0, state:{x:4.60,y:-0.05,s:1.28,iris:0.72,focus:1.0,spread:0.0,camZ:10.80,glow:0.50,camY:0.35,tilt:-0.10,key:3.20}, rot:0.000 },
+  { p:0.007291, state:{x:4.58,y:-0.05,s:1.28,iris:0.73,focus:1.0,spread:0.0,camZ:10.80,glow:0.51,camY:0.35,tilt:-0.10,key:3.20}, rot:0.016 },
+  { p:0.014582, state:{x:4.53,y:-0.05,s:1.28,iris:0.76,focus:1.0,spread:0.0,camZ:10.78,glow:0.52,camY:0.35,tilt:-0.10,key:3.25}, rot:0.050 },
+  { p:0.021873, state:{x:4.44,y:-0.05,s:1.28,iris:0.79,focus:1.0,spread:0.0,camZ:10.74,glow:0.54,camY:0.36,tilt:-0.10,key:3.28}, rot:0.090 },
+  { p:0.029165, state:{x:4.30,y:-0.05,s:1.29,iris:0.82,focus:1.0,spread:0.0,camZ:10.62,glow:0.56,camY:0.36,tilt:-0.10,key:3.32}, rot:0.158 },
+  { p:0.036456, state:{x:4.16,y:-0.05,s:1.29,iris:0.85,focus:1.0,spread:0.0,camZ:10.50,glow:0.58,camY:0.37,tilt:-0.11,key:3.38}, rot:0.216 },
+  { p:0.043746, state:{x:4.05,y:-0.05,s:1.28,iris:0.87,focus:1.0,spread:0.0,camZ:10.38,glow:0.59,camY:0.37,tilt:-0.11,key:3.42}, rot:0.266 },
+  { p:0.047392, state:{x:3.99,y:-0.05,s:1.28,iris:0.88,focus:1.0,spread:0.0,camZ:10.32,glow:0.60,camY:0.38,tilt:-0.11,key:3.45}, rot:0.288 },
+  { p:0.054683, state:{x:3.85,y:-0.05,s:1.27,iris:0.90,focus:1.0,spread:0.0,camZ:10.22,glow:0.60,camY:0.38,tilt:-0.11,key:3.48}, rot:0.324 },
+  { p:0.056324, state:{x:3.72,y:-0.03,s:1.10,iris:0.85,focus:0.92,spread:0.0,camZ:10.20,glow:0.55,camY:0.39,tilt:-0.11,key:3.30}, rot:0.468 },
+  { p:0.059969, state:{x:3.55,y:-0.02,s:0.98,iris:0.80,focus:0.85,spread:0.0,camZ:10.20,glow:0.50,camY:0.40,tilt:-0.11,key:3.15}, rot:0.648 },
 
   // ── ORBITAL CHAPTER: PINNED CORE SYSTEM (0.099 – 0.227) ──────────────
   // SCENE 2 is a long sticky chapter (~400vh section → ~300vh of pinned
@@ -704,30 +714,159 @@ function aboutHandOff(p: number): number {
 
 export function sampleJourney(progress: number): Journey {
   const p = Math.min(1, Math.max(0, progress));
+  // ── MOBILE RETIMING OF THE PROJECTS INTRO (narrow only) ─────────────
+  // The glyph keys were calibrated against the DESKTOP word-hold (native
+  // hold 0.1817–0.1972). On a 390px frame the intro section's own q leaves
+  // the word holding later in this timeline: the letters slide in from its
+  // q 0.25 (p ≈ 0.201), hold across q 0.45–0.68 (p ≈ 0.215–0.231) and have
+  // dissolved by q 0.85 (p ≈ 0.243) — a window the native hold never
+  // overlaps, so the machine and the word never held together on mobile.
+  // This remap samples the table so the machine rests until the letters
+  // appear, approaches as they assemble, holds across the word's whole
+  // on-screen span, then breaks out while the word dissolves. Identity
+  // below 0.16314 and above 0.2508 (which lands inside the DeployForge
+  // lock's flat, so pose continuity is exact); `narrow` is false at every
+  // width ≥768, so desktop samples the table byte for byte.
+  //
+  // Calibration (390×844, measured): intro top 8271px, height 1857px,
+  // docH 30891, about 3376 — tighter or taller frames drift by ~1% of p,
+  // which the slot solve in Aperture.tsx absorbs.
+  let pw = p;
+  if (scrollState.narrow && p > 0.16314) {
+    if (p <= 0.2010) pw = 0.16314;
+    else if (p <= 0.2148) pw = 0.16314 + (p - 0.2010) * (0.018592 / 0.0138);
+    else if (p <= 0.2308) pw = 0.181732 + (p - 0.2148) * (0.015493 / 0.0160);
+    else if (p <= 0.2508) pw = 0.197225 + (p - 0.2308) * (0.051130 / 0.0200);
+  }
   let i = 0;
-  while (i < KEYS.length - 2 && p > KEYS[i + 1].p) i++;
+  while (i < KEYS.length - 2 && pw > KEYS[i + 1].p) i++;
   const a = KEYS[i];
   const b = KEYS[i + 1];
-  const t = smootherstep((p - a.p) / Math.max(1e-5, b.p - a.p));
+  const t = smootherstep((pw - a.p) / Math.max(1e-5, b.p - a.p));
   const lerp = (u: number, v: number) => u + (v - u) * t;
   const narrow = scrollState.narrow;
-  const xScale = narrow ? 0.35 : 1;
+  // NARROW FRAMES. This is a pure scale on `x`, so it is EXACTLY zero-effect on
+  // every chapter whose object is centred (the orbit core, Under The Surface,
+  // the wafer, the whole interior sequence — all x = 0) and only pulls the
+  // chapters that deliberately sit off-centre inboard, which is what a 390px
+  // frame needs: desktop's hero parks the machine at 93% of the width, which
+  // on a 1440 frame still reads as a lens entering from the right but on a
+  // narrow one pushes most of it off the edge. `s` comes down with it so the
+  // instrument stays a readable object rather than a full-bleed smear, and the
+  // camera comes in a little to keep the 21-unit wafer framed.
+  const xScale = narrow ? 0.2 : 1;
   const sScale = narrow ? 0.62 : 1;
   // lookZ falls back to the classic look-ahead so upstream keys (which
   // never set it) behave exactly as before.
   const lzA = a.state.lookZ ?? (-0.5 - a.state.spread * 2);
   const lzB = b.state.lookZ ?? (-0.5 - b.state.spread * 2);
+  // ── NARROW-FRAME FRAMING ────────────────────────────────────────────
+  //
+  // Two chapters need the object framed differently on a portrait frame, and
+  // both are the same single fact: the object's apparent size is a function of
+  // viewport HEIGHT (the vertical FOV is fixed at 42 degrees), so it does NOT
+  // shrink when the frame gets narrower — while the copy it shares the frame
+  // with does. On a 1440 frame the two sit side by side; on a 390 one they
+  // cannot, so each of these two chapters gets the object framed against the
+  // copy instead of beside it.
+  //
+  // Each is keyed to the exact keyframe band that chapter occupies and is
+  // exactly 1 / exactly 0 everywhere else — so every other chapter samples
+  // the table byte for byte, and `narrow` is false at every width from 768 up.
+  //
+  // PROJECTS INTRO: the "O" of PROJECTS is an empty DOM slot the object
+  // parks in (Sections.tsx), and that slot cannot be more than about a fifth
+  // of a 390px line once PR and JECTS have taken the rest of it. Narrow frames
+  // bring the object down to the size of the slot it is standing in.
+  const introBand = narrow && p > 0.17 && p < 0.27 ? 0.42 : 1;
+  //
+  // PORTRAIT HERO. The copy is seated below the header (globals.css) and the
+  // machine owns the lower half, but the hero controller parks the object's
+  // centre on the frame's vertical middle — its rim reached up into the
+  // proof line ("ChatY · SkillForge · DeployForge"). One world-Y sink, gated
+  // on `narrow` and faded out across the hero's own scroll, so the machine
+  // settles downward on load and is gone by the orbital core lock (p 0.085),
+  // where the table still wants y 0 exactly. --lens-y follows the object
+  // automatically, so the scan axis sinks with it.
+  const heroSink = narrow ? 1 - smootherstep(Math.min(1, p / 0.085)) : 0;
+  //
+  // PROJECTS: three scenes, each a full column of copy on desktop with the
+  // object reframing from the opposite side. On a phone the copy takes the
+  // width, so the object is lifted into the top of the frame instead and the
+  // two meet at one clean horizontal line rather than the copy sitting under
+  // the instrument. camY is NEGATIVE to lift it — the aim point rides at
+  // camY*0.15, so lowering the camera is what raises the object in frame — and
+  // the object comes down a little with it, because the copy it has to clear is
+  // a full-width column on this frame rather than the 38% column it is on a
+  // desktop one.
+  //
+  // The envelope is a ramp at both ends rather than a step, and it is released
+  // BEFORE p 0.355 on purpose: the Under The Surface keys begin at p 0.367 and
+  // the journey deliberately leads its own section, so a step here would pop
+  // the object downward on the frame the camera starts its dive. It is exactly
+  // 1 outside the band, and `narrow` is false at every width from 768 up.
+  // Note the `: 0`. This term is BOTH a lift (additive, wants 0) and a
+  // size reduction (multiplicative as 1 - 0.25*x, which wants 1), so it has to
+  // be 0 off a narrow frame for both to come out as identity.
+  const projectsFrame = narrow
+    ? Math.max(
+        0,
+        Math.min(1, (p - 0.245) / 0.02, 1 - (p - 0.355) / 0.05)
+      )
+    : 0;
+  // -12, not -9: the scene copy is bottom-anchored, so its top edge floats
+  // with each scene's content height. ChatY is the tallest of the three (it
+  // leads with its title and carries a metadata band) and therefore sits
+  // ~40px higher than the two that open on a kicker, and at -9 its title ran
+  // under the instrument's lower-left arc. This clears the TALLEST scene, which
+  // is the only one that has to be clear for all three to be.
+  const projectsLift = projectsFrame * -12;
+
+  // The narrow camera pulls back a little so a portrait frame can hold a 3-unit
+  // instrument and a 21-unit wafer. That offset has to be GONE by the time the
+  // camera is inside the machine: the interior sequence is authored as real
+  // depths (camZ -1.8 / -5.2 / -8.6 / -12.0 against plates at -5.6 / -9.0 /
+  // -12.4 / -15.8), and 1.8 units of extra pull-back walks the camera straight
+  // back out of the throat — the visitor would see the mouth of the bore and
+  // none of the layers. `tunnel` is exactly 1 for the whole interior and
+  // exactly 0 everywhere else, so it gates this and nothing else.
+  const tunnelT = lerp(a.state.tunnel ?? 0, b.state.tunnel ?? 0);
+  const camBack = narrow ? 1.8 * (1 - tunnelT) : 0;
+
+  // THE WAFER CHAPTER, ON A PORTRAIT FRAME. Its camera is SOLVED, not dialled:
+  // camZ 29.76 with camY 15.2 and lookY -13.892 together produce a disc that is
+  // 45.9% of the WIDTH and 47.2% of the HEIGHT of a 1440x900 frame, which is
+  // why that disc still reads as a surface rather than a diagram. Every one of
+  // those numbers is a function of the frame's aspect, so on a 390-wide frame
+  // the identical rig produces a wafer more than twice the width of the
+  // viewport.
+  //
+  // Retreat is NOT the fix, and the keyframe table already says why: for a disc,
+  // height_frac = 1.6 * sin(pitch) * width_frac, so pulling the camera back
+  // shrinks the width and takes the height with it — a zoomed-out shot stranded
+  // in black. Scaling camZ, camY AND lookY by the SAME factor is: it preserves
+  // the pitch, the silhouette and the aim relation exactly (the aim is
+  // camY*0.15 + lookY, so all three scale together), and simply stands the
+  // whole solved composition far enough back to fit. Gated on the same
+  // lookY signal Aperture.tsx uses to recognise this chapter, so it is exactly
+  // 1 everywhere else and at every width from 768 up.
+  const lY = lerp(a.state.lookY ?? 0, b.state.lookY ?? 0);
+  const waferFrame = narrow
+    ? Math.min(1, Math.max(0, (Math.abs(lY) - 0.5) / 1.2))
+    : 0;
+  const fitK = 1 + waferFrame * (scrollState.fit - 1);
+
   const j: Journey = {
     x:      lerp(a.state.x, b.state.x) * xScale,
-    y:      lerp(a.state.y, b.state.y),
-    s:      lerp(a.state.s, b.state.s) * sScale,
+    y:      lerp(a.state.y, b.state.y) - heroSink * 1.55,
+    s:      lerp(a.state.s, b.state.s) * sScale * introBand * (1 - 0.25 * projectsFrame),
     iris:   lerp(a.state.iris, b.state.iris),
     focus:  lerp(a.state.focus, b.state.focus),
     rot:    lerp(a.rot, b.rot),
     spread: lerp(a.state.spread, b.state.spread) * (narrow ? 0.5 : 1),
-    camZ:   lerp(a.state.camZ, b.state.camZ) + (narrow ? 1.8 : 0),
+    camZ:   (lerp(a.state.camZ, b.state.camZ) + camBack) * fitK,
     camX:   lerp(a.state.x, b.state.x) * xScale * 0.3,
-    camY:   lerp(a.state.camY ?? 0, b.state.camY ?? 0),
+    camY:   (lerp(a.state.camY ?? 0, b.state.camY ?? 0) + projectsLift) * fitK,
     tilt:   lerp(a.state.tilt ?? 0, b.state.tilt ?? 0),
     key:    lerp(a.state.key ?? 2.8, b.state.key ?? 2.8),
     glow:   lerp(a.state.glow, b.state.glow),
@@ -735,10 +874,10 @@ export function sampleJourney(progress: number): Journey {
     still:  lerp(a.state.still ?? 0, b.state.still ?? 0),
     lookZ:  lerp(lzA, lzB),
     cap:    lerp(a.state.cap ?? 0, b.state.cap ?? 0),
-    tunnel: lerp(a.state.tunnel ?? 0, b.state.tunnel ?? 0),
+    tunnel: tunnelT,
     hold:   lerp(a.state.hold ?? 0, b.state.hold ?? 0),
     face:   lerp(a.state.face ?? 0, b.state.face ?? 0),
-    lookY:  lerp(a.state.lookY ?? 0, b.state.lookY ?? 0),
+    lookY:  lY * fitK,
     tip:    lerp(a.state.tip ?? 0, b.state.tip ?? 0),
     dropY:  lerp(a.state.dropY ?? 0, b.state.dropY ?? 0),
     land:   lerp(a.state.land ?? 0, b.state.land ?? 0),

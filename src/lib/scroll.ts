@@ -11,6 +11,13 @@ export const scrollState = {
   velocity: 0,
   reducedMotion: false,
   narrow: false, // mobile composition flag
+  // How much further a camera has to stand back to hold a composition authored
+  // for a 16:10 frame, as a multiple. 1 on any frame at or wider than 16:10,
+  // and 1 / (aspect / 1.6) below it: 3.46 on a 390x844 phone. Scaling a
+  // camera RIG (distance, height and aim together) preserves the angle it
+  // looks from and the silhouette it produces, so a composition solved against
+  // a wide frame is re-framed here rather than re-authored.
+  fit: 1,
 };
 
 // The About chapter's scroll box, in document pixels. Measured, never
@@ -80,6 +87,8 @@ export function initSmoothScroll(): () => void {
 
   const onResize = () => {
     scrollState.narrow = window.innerWidth < 768;
+    const aspect = window.innerWidth / Math.max(1, window.innerHeight);
+    scrollState.fit = Math.max(1, 1.6 / aspect);
   };
   onResize();
   window.addEventListener("resize", onResize);

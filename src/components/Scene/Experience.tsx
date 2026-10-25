@@ -21,7 +21,7 @@ export function Experience() {
     <>
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-0"
+        className="sky-canvas pointer-events-none fixed inset-0 z-0"
         style={{ contain: "strict" }}
       >
         <Canvas
@@ -34,7 +34,7 @@ export function Experience() {
       </div>
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-30"
+        className="machine-canvas pointer-events-none fixed inset-0 z-30"
         style={{ contain: "strict" }}
       >
         <Canvas

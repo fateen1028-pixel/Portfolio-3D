@@ -58,6 +58,7 @@ const navItems = [
 
 export function Hud() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Drive active state from the same scroll source-of-truth.
   // gsap.ticker runs ~60fps in sync with the 3D render loop —
@@ -75,11 +76,97 @@ export function Hud() {
     return () => gsap.ticker.remove(tick);
   }, []);
 
+  // MOBILE MENU LOCK + ESCAPE. body overflow propagates to the viewport
+  // (html has none of its own), so one rule stops the page scrolling behind
+  // the open overlay without touching Lenis itself.
+  useEffect(() => {
+    if (!menuOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  const menuGo = (href: string) => {
+    setMenuOpen(false);
+    scrollToTarget(href);
+  };
+
   return (
     // No backdrop panel — the nav floats over the dark environment.
     // pointer-events-none on the header; individual items re-enable it.
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-[18px] md:px-10">
+      {/* ── MOBILE MENU OVERLAY ─────────────────────────────────────────
+          Full-screen, under the header bar (so the toggle stays reachable)
+          and over everything else. Mounted always; invisible + inert when
+          closed so its links can never take focus through either path. */}
+      <div
+        id="mobile-menu"
+        aria-hidden={!menuOpen}
+        className={`fixed inset-0 z-0 md:hidden ${menuOpen ? "pointer-events-auto visible opacity-100" : "pointer-events-none invisible opacity-0"}`}
+        style={{
+          background: "rgba(6,6,7,0.92)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          transition: "opacity 0.28s ease, visibility 0.28s ease",
+        }}
+      >
+        <nav
+          aria-label="Chapters"
+          className="flex h-full w-full flex-col justify-center gap-6 px-8"
+        >
+          {navItems.map((item, i) => {
+            const isActive = activeIdx === i;
+            return (
+              <a
+                key={item.n}
+                href={item.href}
+                onClick={(e) => { e.preventDefault(); menuGo(item.href); }}
+                style={{
+                  transitionDelay: menuOpen ? `${80 + i * 55}ms` : "0ms",
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? "translateY(0)" : "translateY(14px)",
+                }}
+                className={[
+                  "pointer-events-auto flex items-center gap-4 py-2 transition-all duration-500 ease-out",
+                  "text-[#EAE6DC]",
+                  isActive && !menuOpen ? "" : "",
+                ].join(" ")}
+              >
+                {/* Lime dot — active chapter only */}
+                <span
+                  aria-hidden
+                  style={{
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "50%",
+                    flexShrink: 0,
+                    background: "rgba(200,255,46,1)",
+                    opacity: isActive ? 1 : 0,
+                    boxShadow: isActive ? "0 0 8px rgba(200,255,46,0.5)" : "none",
+                    transition: "opacity 0.25s ease",
+                  }}
+                />
+                <span className="font-mono text-[11px] tracking-[0.32em] text-[#8F8A80]">
+                  {item.n}
+                </span>
+                <span
+                  className={`font-display text-[11vw] font-black uppercase leading-none tracking-tight ${
+                    isActive ? "text-[#F1EEE6]" : "text-[#EAE6DC]/60"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-[18px] md:px-10">
 
         {/* ── WORDMARK ────────────────────────────────────────────────── */}
         <a
@@ -91,9 +178,9 @@ export function Hud() {
           Fateen
         </a>
 
-        {/* ── PRIMARY NAVIGATION ──────────────────────────────────────── */}
+        {/* ── PRIMARY NAVIGATION (desktop) ────────────────────────────── */}
         <nav aria-label="Primary" className="pointer-events-auto hidden md:block">
-          <ul className="flex items-center gap-8">
+          <ul className="hud-nav flex items-center gap-8">
             {navItems.map((item, i) => {
               const isActive = activeIdx === i;
               return (
@@ -108,14 +195,41 @@ export function Hud() {
           </ul>
         </nav>
 
-        {/* ── MOBILE FALLBACK ─────────────────────────────────────────── */}
-        <a
-          href="#work"
-          onClick={(e) => { e.preventDefault(); scrollToTarget("#work"); }}
-          className="pointer-events-auto md:hidden font-mono text-[10px] tracking-[0.20em] uppercase text-[#A6A29A]"
+        {/* ── HAMBURGER (mobile) ────────────────────────────────────────
+            Two bars that open into an X. The button stays above the
+            overlay (bar row is z-10 over overlay z-0) so it is also the
+            close control — one control, one place, ends the story. */}
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((v) => !v)}
+          className="pointer-events-auto relative z-10 -mr-2 flex h-10 w-10 items-center justify-center md:hidden"
         >
-          Index
-        </a>
+          <span
+            aria-hidden
+            style={{
+              position: "absolute",
+              width: "20px",
+              height: "1.5px",
+              background: "#EAE6DC",
+              transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1)",
+              transform: menuOpen ? "translateY(0) rotate(45deg)" : "translateY(-3.5px)",
+            }}
+          />
+          <span
+            aria-hidden
+            style={{
+              position: "absolute",
+              width: "20px",
+              height: "1.5px",
+              background: "#EAE6DC",
+              transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1)",
+              transform: menuOpen ? "translateY(0) rotate(-45deg)" : "translateY(3.5px)",
+            }}
+          />
+        </button>
 
       </div>
     </header>
@@ -148,10 +262,12 @@ function NavItem({
         "group relative flex items-center gap-[7px]",
         "font-mono text-[10px] tracking-[0.20em] uppercase",
         "select-none",
-        // Active: warm off-white. Inactive: muted grey.
+        // Active: warm off-white. Inactive: muted grey. #6E6A62 at 0.80 was
+        // ~3.2:1 on near-black — unreadable on the load frame, which is the one
+        // place these four words have to do their job.
         isActive
           ? "text-[#EAE6DC] opacity-100"
-          : "text-[#6E6A62] opacity-80 hover:text-[#B8B4AC] hover:opacity-100",
+          : "text-[#8A857C] opacity-90 hover:text-[#EAE6DC] hover:opacity-100",
       ].join(" ")}
     >
       {/* Lime dot — active indicator only */}
@@ -208,14 +324,14 @@ export function Hero() {
             "radial-gradient(ellipse 80% 70% at 76% 50%, #131417 0%, #09090b 48%, #060607 100%)",
         }}
       />
-      <div className="sticky top-0 flex h-screen flex-col">
+      <div className="hero-stage sticky top-0 flex h-screen flex-col">
         <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col justify-center px-6 pt-16 md:px-10">
           <div className="hero-field relative flex flex-1 items-center">
 
             {/* LEFT — identity. The composition anchor. */}
             <div className="relative z-10 ml-0 w-full max-w-[580px] md:ml-[40px] md:-translate-y-[2vh]">
-              <p className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#A6A29A] opacity-55">
-                Software Engineer
+              <p className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#B4AFA5] opacity-80">
+                Software Engineer <span className="text-[#c8ff2e]">·</span> Chennai, India
               </p>
               <h1 className="hero-identity mt-4 text-[#F1EEE6]">
                 <span className="font-display hero-title block text-left text-[11.5vw] leading-[0.86] font-black uppercase md:text-[5.6vw]">
@@ -224,8 +340,14 @@ export function Hero() {
                   Fateen
                 </span>
               </h1>
-              <p className="mt-7 font-mono text-[10px] tracking-[0.28em] uppercase text-[#6E6A62] opacity-80">
+              <p className="mt-7 font-mono text-[10px] tracking-[0.28em] uppercase text-[#8F8A80]">
                 I build systems, products &amp; tools.
+              </p>
+              {/* The proof, on the first screen. These three names used to live
+                  only in the <meta description> — the best argument this site
+                  has for itself was invisible to anyone standing on it. */}
+              <p className="mt-3 font-mono text-[10px] tracking-[0.28em] uppercase text-[#8F8A80] opacity-70">
+                ChatY <span className="text-[#c8ff2e]">·</span> SkillForge <span className="text-[#c8ff2e]">·</span> DeployForge
               </p>
             </div>
 
@@ -233,9 +355,24 @@ export function Hero() {
                 No content here — the relationship is positional, not verbal. */}
             <div aria-hidden className="hidden flex-1 md:block" />
 
-            {/* RIGHT — 3D canvas territory only */}
+            {/* RIGHT — 3D canvas territory only. On a phone there is no room
+                for two columns, so these collapse and the instrument takes the
+                lower half of the frame instead: same two masses, stacked. */}
             <div aria-hidden className="hidden w-[28%] shrink-0 md:block" />
+
+            <div aria-hidden className="min-h-[26svh] w-full md:hidden" />
           </div>
+        </div>
+
+        {/* The one affordance the load frame was missing: on a phone the
+            machine owns the lower half and the machine canvas is painted
+            ABOVE main (z-30), so a bottom cue there would simply be occluded
+            — hence desktop only. Fades itself out; a permanent one is clutter. */}
+        <div className="hero-cue mx-auto hidden w-full max-w-[1600px] items-center gap-3 px-6 pb-8 md:flex md:px-10 md:pl-[80px]">
+          <span aria-hidden className="block h-px w-10 bg-[#c8ff2e] opacity-70" />
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8F8A80]">
+            Scroll
+          </span>
         </div>
       </div>
     </section>
@@ -438,7 +575,7 @@ const ORBITAL_NODES = [
     tag: "ARCHITECTURE",
     title: "SYSTEMS",
     subtitle: "DISTRIBUTED RUNTIMES",
-    href: "#systems",
+    href: "#wafer",
     baseAngle: 0, // right
     quadrant: "right",
   },
@@ -454,10 +591,46 @@ const ORBITAL_NODES = [
   },
 ];
 
+// The authored desktop ellipse: 340 x 275 on a 780 box, measured at
+// 1440x900. Module scope, because it is a constant and the resize effect reads
+// it on every frame it is mounted.
+const ORBIT_DESKTOP = { rx: 340, ry: 275, box: 780 };
+
 export function OrbitalSystem() {
   const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // THE ELLIPSE IS SIZED TO THE FRAME. Desktop's 340 x 275 is reproduced
+  // exactly at every width from 768 up. Below that the SAME ellipse — same
+  // proportion, same 360 degrees, same four node offsets — is scaled into the
+  // viewport, so this chapter is the same event on a phone rather than a
+  // different diagram or a squeezed one. The radius is bounded by the frame
+  // rather than by a fixed box because the nodes ride it: the widest node block
+  // (a subtitle in tracked mono) has to clear the edge at the horizontal
+  // extremes, which is the one place this diagram can actually clip.
+  const [orbit, setOrbit] = useState(ORBIT_DESKTOP);
+
+  useEffect(() => {
+    const measure = () => {
+      if (window.innerWidth >= 768) {
+        setOrbit(ORBIT_DESKTOP);
+        return;
+      }
+      const rx = Math.min(ORBIT_DESKTOP.rx, window.innerWidth * 0.5 - 70);
+      // The radius is capped by the frame WIDTH, because the two nodes at the
+      // horizontal extremes are the ones that can run off an edge. The vertical
+      // radius has no such constraint on a portrait frame — it is free, so it
+      // is opened up instead, and the orbit simply stands taller in a phone
+      // than it does on a desktop. Same ellipse, same centre, same one 360
+      // degrees: only its eccentricity adapts to the shape of the frame.
+      const ry = rx * 1.3;
+      setOrbit({ rx, ry, box: rx * 2 + 200 });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   useEffect(() => {
     let prev = -1;
@@ -535,9 +708,9 @@ export function OrbitalSystem() {
 
   const activeIndex = hoveredIndex !== null ? hoveredIndex : scrollActive;
 
-  // Ellipse dimensions matching desktop 1440x900 viewport:
-  const rx = 340;
-  const ry = 275;
+  // Ellipse dimensions: authored above, desktop numbers verbatim.
+  const rx = orbit.rx;
+  const ry = orbit.ry;
 
   return (
     <section
@@ -569,14 +742,16 @@ export function OrbitalSystem() {
               nodes, not decoration. No telemetry, no labels, no HUD. */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             <svg
-              className="w-[780px] h-[780px] max-w-none"
-              viewBox="0 0 780 780"
+              className="max-w-none"
+              width={orbit.box}
+              height={orbit.box}
+              viewBox={`0 0 ${orbit.box} ${orbit.box}`}
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <ellipse
-                cx="390"
-                cy="390"
+                cx={orbit.box / 2}
+                cy={orbit.box / 2}
                 rx={rx}
                 ry={ry}
                 stroke="rgba(244, 241, 234, 0.10)"
@@ -630,7 +805,7 @@ export function OrbitalSystem() {
                     {/* Typographic node: index + name + spec. No card, no
                         border, no brackets — emphasis is opacity + the lime
                         index of whichever module is nearest the top. */}
-                    <div className="px-2 py-1 text-center">
+                    <div className="orbit-node px-2 py-1 text-center">
                       <div
                         className={`font-mono text-[10px] font-bold tracking-[0.25em] transition-colors duration-200 ${
                           isActive ? "text-[#C8FF2E]" : "text-[#8E8A82]"
@@ -786,7 +961,7 @@ function ProjectKicker({ index, total }: { index: string; total: string }) {
 
 function ProjectLinks({ p }: { p: (typeof projects)[number] }) {
   return (
-    <div className="mt-6 flex items-center gap-8 text-[12px] tracking-[0.25em] uppercase">
+    <div className="project-links mt-6 flex items-center gap-8 text-[12px] tracking-[0.25em] uppercase">
       <Magnetic>
         <a href={p.liveUrl} className="link-underline">
           View ↗
@@ -1225,7 +1400,7 @@ export function Final() {
           {/* LEFT: the machine. Deliberately empty — the object is the anchor
               and there is nothing to put beside it. */}
           <div aria-hidden className="hidden md:block" />
-          <div className="max-w-[460px] pb-[40vh] md:max-w-none md:pb-0 md:pl-[12vw]">
+          <div className="contact-copy max-w-[460px] pb-[40vh] md:max-w-none md:pb-0 md:pl-[12vw]">
             <Meta>04 &mdash; Contact</Meta>
             <p className="resolve-copy mt-6 font-display text-[13vw] leading-[0.94] font-black uppercase md:text-[3vw]">
               <span className="reveal-line">

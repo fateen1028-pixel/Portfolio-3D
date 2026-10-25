@@ -47,60 +47,6 @@ nextjs-portal,
   line-height: 0.9;
 }
 
-/* FOCUS — the shared optical state. --focus (0..1) is sampled from the
-   same journey that drives the 3D iris and published per frame.
-   Sharpness here IS aperture state: remove the object, lose the image.
-   Threshold variants let individual words lock in sequence
-   (.focus-t1/2/3 stage the identity lines). */
-.focus-name {
-  filter: blur(calc((1 - var(--focus, 0)) * 7px));
-}
-/* HERO FOCUS WINDOW — the name is the subject, the lens is the observer.
-   .hero-soft is the broad unresolved world; .hero-sharp is an identical
-   layer revealed only inside the bore (position + radius published per
-   frame from the rendered mechanism as --lens-x/--lens-y/--lens-r, so the
-   sharp region always coincides with the actual aperture). The feathered
-   mask edge reads as a focal plane, not a CSS circle. The window is
-   readable from the first frame (base 0.6: the bore is open at 0%, so a
-   faint window would read as broken). The soft floor reaches ~0.5px at
-   lock: 10% mostly sharp, 15% locked. Remove the lens and the
-   interaction disappears. */
-.hero-soft {
-  filter: blur(calc(7px - var(--focus, 0) * 6.5px));
-}
-.hero-sharp {
-  opacity: calc(0.6 + var(--focus, 0) * 0.4);
-  -webkit-mask-image: radial-gradient(
-    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
-    #000 50%,
-    transparent 74%
-  );
-  mask-image: radial-gradient(
-    circle var(--lens-r, 190px) at var(--lens-x, 60%) var(--lens-y, 47%),
-    #000 50%,
-    transparent 74%
-  );
-}
-.focus-t1 {
-  filter: blur(min(5px, max(0px, calc((0.5 - var(--focus, 0)) * 20px))));
-}
-.focus-t2 {
-  filter: blur(min(5px, max(0px, calc((0.7 - var(--focus, 0)) * 20px))));
-}
-.focus-t3 {
-  filter: blur(min(5px, max(0px, calc((0.9 - var(--focus, 0)) * 20px))));
-}
-.focus-img img {
-  filter: blur(calc((1 - var(--focus, 0)) * 6px));
-}
-/* A — side copy lives outside the bore: always sharp, never optical. */
-.project-copy-side {
-  z-index: 2;
-}
-.focus-word {
-  filter: blur(calc((1 - var(--focus, 0)) * 5px));
-}
-
 /* System depth strata (wow): ONE sharp plane at a time. Steep falloff
    (k=8: neighbours at 0.125 distance read 0) so layers never stack as
    ghosts. At spread=0 all depths read 0 — nothing leaks into RESOLVE. */
@@ -118,20 +64,6 @@ nextjs-portal,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .focus-name,
-  .focus-t1,
-  .focus-t2,
-  .focus-t3,
-  .hero-soft,
-  .focus-img img,
-  .focus-word {
-    filter: none;
-  }
-  .hero-sharp {
-    opacity: 1;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
   .o-slot {
     display: none;
   }
@@ -277,6 +209,28 @@ button:focus-visible {
   position: relative;
 }
 .hero-title { text-shadow: 0 0 34px rgba(244, 241, 234, 0.05); }
+
+/* THE SCROLL CUE. It arrives, sits, and leaves on its own clock — a hint that
+   expires, not furniture. Driven by no JS: the hero is scroll-driven, and a
+   cue that needed the scroll to reveal itself would only ever be seen by
+   people who had already scrolled. */
+.hero-cue {
+  animation: hero-cue 4.6s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+}
+@keyframes hero-cue {
+  0% { opacity: 0; transform: translateY(6px); }
+  14% { opacity: 1; transform: translateY(0); }
+  58% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* These visitors still have to find the scroll, and the hero pins for 80vh,
+     so the cue stays — it just stops moving. */
+  .hero-cue {
+    animation: none;
+    opacity: 1;
+  }
+}
 
 
 /* Work is seen through the bore. The subject is sized to nest INSIDE
@@ -490,6 +444,314 @@ button:focus-visible {
 }
 
 @media (max-width: 767px) {
-  .project-subject { width: min(92vw, 470px); }
-  .project-copy { left: 13%; right: 13%; bottom: 15%; }
+  /* NOTE: deliberately no `overflow-x` rule here. The base body rule already
+     uses `overflow-x: clip`, and `clip` does NOT turn the element into a
+     scroll container — `hidden` does, and that forces overflow-y to `auto`,
+     which silently un-pins every `position: sticky` stage on the page (the
+     About stage, the orbital stage, the projects intro). Do not "fix" a
+     sideways overflow here with `hidden`. */
+
+  /* ── MOBILE IS THE SAME SHOT, AT A DIFFERENT FRAME ──────────────────────
+     The whole narrative on this page is one continuous shot: the machine
+     wakes, becomes the punctuation of a question, hands over to the orbital
+     system, becomes the O in PROJECTS, reframes three projects, becomes a
+     portal the camera flies through, and lands on a wafer that turns out to
+     be the footer. Every one of those beats is driven by document scroll
+     progress through lib/journey.ts and drawn by lib/about.ts +
+     Scene/Aperture.tsx.
+
+     Nothing in that engine is desktop-only. It is written in `vh` chapter
+     distances and solved against the LIVE layout — about.ts rasterises the
+     "?" glyph and re-measures its dot every frame, and Aperture unprojects
+     that DOM pixel through the real camera — so it already answers
+     "wherever this viewport puts the question". It only had to be allowed
+     to run.
+
+     So this block does NOT restage the story and does NOT substitute static
+     plates for it. It only adapts the FRAME:
+
+       · the camera pulls in a little and the machine shrinks (the `narrow`
+         flag in lib/scroll.ts and lib/journey.ts), so a 3-unit instrument
+         AND a 21-unit wafer both still fit a 390px viewport;
+       · the chapters keep their real vh distances, because the keyframe
+         table is a table of DOCUMENT progress — collapsing one chapter's
+         height on one screen size retimes every beat after it;
+       · type is rescaled per screen size so the same words still hold the
+         frame they hold on a desktop one.
+
+     Every rule here is inside this one media query and every JS branch it
+     relies on is false above 767px, so the desktop composition is
+     unchanged at every breakpoint above this one. */
+
+  /* THE HERO. Desktop gives identity the LEFT territory and the machine the
+     RIGHT, with a channel of black between them. A 390px frame cannot hold
+     two columns, so the machine takes the lower half and the identity sits
+     above it: the same two masses and the same optical argument, stacked
+     instead of side by side. */
+  #hero .hero-stage {
+    justify-content: flex-start;
+  }
+
+  /* The instrument is painted above `main`, so DOM can never sit over it —
+     the two have to be kept apart by geometry alone. The identity stack is
+     therefore seated hard against the top of the stage, on desktop's own
+     tight leading, and the tighter name-to-tagline spacing is what leaves the
+     machine the whole lower two-thirds of the frame to itself. */
+  #hero .hero-field {
+    align-items: flex-start;
+    /* Seated BELOW the header instead of against it: the identity block
+       clears the fixed bar by a deliberate margin, the machine owns the
+       lower half, and the two never have to negotiate for pixels. */
+    padding-top: 12vh;
+  }
+
+  #hero .hero-identity {
+    margin-top: 0.75rem;
+  }
+
+  #hero .hero-identity + p {
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .hero-title {
+    /* 14.6vw, not more: "MOHAMED" is ~5.7 character-widths of the display
+       face, so at 15.5vw it is wider than a 320px frame's content box and the
+       whole document gains a few pixels of sideways scroll. */
+    font-size: clamp(2.75rem, 14.6vw, 5.25rem);
+    letter-spacing: -0.045em;
+  }
+
+  /* THE QUESTION. Desktop sets it at 14vw of a 1440 frame, which lands
+     "WHO AM I" on ~72% of the width and puts the two-line lockup's centre at
+     0.40 of the frame height — above centre, so the frame it vacates is the
+     space the answer rises into. A phone gets the same lockup, deliberately
+     a little wider of its frame than desktop is of a 1440 one, because 55px of
+     display type is legible where 202px is monumental. `nowrap` is load
+     bearing: the "?"'s dot is a measured pixel the machine is welded to
+     (lib/about.ts), and a wrap would move that pixel every time the copy
+     reflowed. */
+  .about-q {
+    top: 33vh;
+    font-size: 17vw;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+  }
+
+  .about-q-line {
+    white-space: nowrap;
+  }
+
+  /* THE ANSWER. It resolves on the same centre line the question left, on a
+     frame the question and the machine have both already vacated. Its gutter
+     is deliberately NOT overridden: it already carries the same px-6 the rail
+     above it and every other chapter on this page uses, and an override here
+     is what puts the chapter's own answer copy 4px out from its own chapter
+     label. */
+  .about-lede {
+    /* 7.9vw, measured: the statement is three AUTHORED lines and the longest
+       of them, "AI-POWERED TOOLS.", is 332.5px wide at 8.4vw against a 326.7px
+       column — so it re-wrapped and orphaned "TOOLS." on a line of its own.
+       This holds all three lines whole at 390, at 320 and at 767. */
+    font-size: clamp(1.85rem, 7.9vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .about-note {
+    max-width: 25rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    /* Balanced rag: this paragraph is three lines on a phone and was leaving a
+       single orphan word on the last one. */
+    text-wrap: balance;
+  }
+
+  .about-answer dl {
+    margin-top: 2.75rem;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  /* Desktop's two facts sit on one row 8rem apart. Here they are a single
+     column, so neither has to shrink to fit beside the other. */
+  .about-answer dl > div {
+    text-align: left;
+  }
+
+  /* THE ORBIT'S NODES. Same three lines each — index, name, spec — at a
+     scale the frame can carry, and bounded to a width so the two nodes at the
+     horizontal extremes cannot run off the edges. The bounding width is what
+     the ellipse radius in Sections.tsx is solved against, so the diagram and
+     its labels can never disagree about where the frame ends. */
+  .orbit-node {
+    max-width: 7.25rem;
+  }
+
+  .orbit-node > div:first-child {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  .orbit-node > div:nth-child(2) {
+    font-size: 13px;
+    letter-spacing: 0.09em;
+  }
+
+  .orbit-node > p {
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    line-height: 1.55;
+  }
+
+  .o-slot {
+    width: 15vw;
+  }
+
+  .intro-word {
+    font-size: clamp(3.4rem, 14.5vw, 5.25rem);
+    letter-spacing: -0.05em;
+  }
+
+  /* PROJECTS CHAPTER. The object reframes these three scenes from the
+     opposite side on desktop, which only works because the copy sits in a
+     column of a 1440-wide frame. At this width the copy takes the frame and
+     the machine rides above it — still two masses, never copy under glass. */
+  [data-present] {
+    align-items: flex-end;
+    padding-bottom: 4vh;
+  }
+
+  /* The scene copy is a full-width column here and has to clear the instrument
+     above it, so the stack is tightened: a shorter figure and smaller gaps buy
+     back the room the machine is given at the top of the frame. */
+  [data-present-inner] {
+    padding-bottom: 0;
+  }
+
+  [data-present-inner] > .mt-6,
+  [data-present-inner] > div.mt-6 {
+    margin-top: 1.15rem;
+  }
+
+  [data-present] h3 {
+    /* Long product names have to stay whole at 320px. Deliberately
+       independent of the more theatrical desktop display scale. */
+    font-size: clamp(2.05rem, 9.6vw, 3rem);
+    line-height: 0.84;
+    letter-spacing: -0.05em;
+  }
+
+  [data-present] p {
+    font-size: 15px;
+    text-wrap: balance;
+  }
+
+  /* The figure is left at the full width of the column. Capping its height
+     here does NOT work: the element carries aspect-ratio 16/9, so a max-height
+     is a definite height, and the browser then DERIVES THE WIDTH FROM IT — the
+     figure silently came out 11.6px narrower than the copy above and below it
+     and broke the 24px gutter. Full width keeps the ratio and the grid. */
+  [data-present] .relative[class*="aspect-"] {
+    max-height: none;
+    border-color: rgba(244, 241, 234, 0.16);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.32);
+  }
+
+  .project-links {
+    column-gap: 1.75rem;
+    row-gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  /* THE CHAPTER NAV. Desktop keeps the four inline chapters; a phone gets
+     the hamburger + full-screen overlay in Sections.tsx, so there is no
+     compressed inline nav to style here any more. */
+
+  /* The header runs to its edges by design, so at 320px the wordmark and the
+     four chapters have to be given the room back explicitly. */
+  header > div {
+    padding-inline: 1rem;
+  }
+
+  /* UNDER THE SURFACE / WAFER. Both chapters are drawn entirely inside the
+     canvas now, so the only DOM either owns is its one chapter label — the
+     same label, on the same gate (--syscap / --wfcap), that desktop shows.
+     The reduced-motion plates stay off: this path is not reduced motion. */
+  .uts-cap,
+  .wf-cap {
+    /* 11vh, not 9vh: the header is fixed and owns the top ~54px of the frame,
+       and a chapter label sitting 22px under it reads as a collision rather
+       than as a caption. */
+    top: 11vh;
+    width: 100%;
+    padding-inline: 1.5rem;
+    text-align: center;
+  }
+
+  /* Reduced motion is NOT the mobile path and is deliberately not
+     restyled here: a phone gets the same static plates a desktop does. What it
+     does need is the COLUMN layout rather than the desktop's right-hand rail,
+     which is `min(420px, 30vw)` — 96px wide at 320. And the two chapters'
+     scroll distance has to collapse, because with no choreography there is
+     nothing to fly through. Scoped to the query so neither of these can touch
+     a device that is animating. */
+  @media (prefers-reduced-motion: reduce) {
+    /* With no choreography the aperture falls back to its forced state, which
+       parks the instrument at dead centre — and the canvas is painted ABOVE
+       `main`, so on a phone it would sit on top of the very copy that has to
+       replace it. Desktop solves this by putting the plates in a right-hand
+       column; 375px has no room for that, so the instrument stands down and the
+       document becomes a clean static read. This is the same trade the reduced
+       motion path already makes for the projects intro (.rm-only / .o-fallback). */
+    .machine-canvas,
+    .sky-canvas {
+      display: none;
+    }
+
+    .uts-static,
+    .wf-static {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 4.5rem 1.5rem;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.4rem;
+      text-align: left;
+    }
+
+    #under-the-surface,
+    #wafer {
+      height: auto !important;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  /* THE FOOTER. Its reveal rides --fcap, which the canvas publishes; the
+     copy still resolves on the wafer arriving, exactly as on desktop. */
+  #contact .ft-stage {
+    opacity: 1;
+  }
+
+  /* The desktop block reserves 40vh under the copy, which is what keeps it
+     level with a wafer standing BESIDE it. On a phone the wafer is above, so
+     that reservation just shoves the copy into the upper third and leaves a
+     third of the frame empty above the footer bar. Released, the block
+     centres in the space that is actually its own. */
+  .contact-copy {
+    padding-bottom: 0;
+  }
+
+  .resolve-copy {
+    font-size: clamp(2.35rem, 11.2vw, 3.5rem);
+    line-height: 0.92;
+    text-wrap: balance;
+  }
 }
+

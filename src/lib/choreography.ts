@@ -118,6 +118,12 @@ export function initChoreography(): () => void {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const ctx = gsap.context(() => {
+    // Reduced motion is the ONLY case that gets a still frame. Viewport width
+    // is deliberately not one of them: the chapters below are written in `vh`
+    // and solved against the live layout, so the same nine states of the About
+    // clock run identically at 390px — including the beat where the machine is
+    // the punctuation dot of the "?", which lib/about.ts solves by
+    // unprojecting the glyph's own measured pixel through the real camera.
     if (reduced) {
       gsap.set(".reveal-line > span", { y: 0 });
       gsap.set(".side-l, .side-r", { clearProps: "all", opacity: 1 });

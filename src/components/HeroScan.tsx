@@ -66,8 +66,11 @@ export function HeroScan() {
       }
 
       // Read aperture screen position from Aperture.tsx per-frame CSS vars.
-      // Fallbacks keep the axis visible while the 3D scene initialises.
-      const lensX = parseFloat(root.style.getPropertyValue("--lens-x")) || window.innerWidth  * 0.76;
+      // Fallbacks keep the axis visible while the 3D scene initialises; the
+      // 0.78 matches where the instrument actually sits now (journey.ts p=0,
+      // x 4.60 → ~80% of a 16:10 frame), so the pre-WebGL first paint already
+      // has the line pointing where the object is about to appear.
+      const lensX = parseFloat(root.style.getPropertyValue("--lens-x")) || window.innerWidth  * 0.78;
       const lensY = parseFloat(root.style.getPropertyValue("--lens-y")) || window.innerHeight * 0.50;
 
       // Hero window: 0 → 0.16 (gives a little tail for settling).
@@ -76,7 +79,9 @@ export function HeroScan() {
       // ── 1. OPTICAL AXIS ──────────────────────────────────────────────────
       // The axis spans from the identity's right edge (~37% vw) to just
       // before the lens centre (40 px gap so it terminates AT the aperture).
-      // It is visible at rest (opacity 0.13) and brightens during the scan.
+      // Rest opacity is 0.20, not 0.13: the lens is in frame on load, so the
+      // line of sight is the composition's second read and has to survive a
+      // still first frame — at 0.13 it was invisible until the user scrolled.
       const axisLeft  = window.innerWidth * 0.37;
       const axisWidth = Math.max(0, lensX - axisLeft - 36);
 
@@ -84,7 +89,7 @@ export function HeroScan() {
       const axisWake  = smoothstep(Math.min(1, heroT * 6));          // 0→1 over first ~2.7%
       const axisFade  = smoothstep(Math.min(1, Math.max(0, (p - 0.12) / 0.04)));
       const axisBoost = axisWake * (1 - axisFade) * 0.38;            // max boost +0.38
-      const axisAlpha = 0.13 + axisBoost;                             // rest 0.13 → peak 0.51
+      const axisAlpha = 0.20 + axisBoost;                             // rest 0.20 → peak 0.58
 
       axis.style.top    = `${lensY.toFixed(1)}px`;
       axis.style.left   = `${axisLeft.toFixed(1)}px`;
@@ -99,7 +104,7 @@ export function HeroScan() {
 
       const focalWake  = smoothstep(Math.min(1, Math.max(0, (p - 0.03) / 0.05)));
       const focalFade  = smoothstep(Math.min(1, Math.max(0, (p - 0.13) / 0.03)));
-      const focalAlpha = 0.18 + focalWake * (1 - focalFade) * 0.60;  // rest 0.18 → peak 0.78
+      const focalAlpha = 0.32 + focalWake * (1 - focalFade) * 0.52;  // rest 0.32 → peak 0.84
 
       // Extra flare when the scan streak's bright centre passes over the dot.
       // The streak's right-edge starts at lensX and travels to -280 px.
@@ -169,6 +174,7 @@ export function HeroScan() {
       <div
         ref={axisRef}
         aria-hidden
+        className="hero-scan"
         style={{
           position:      "fixed",
           height:        "1px",
@@ -186,6 +192,7 @@ export function HeroScan() {
       <div
         ref={focalRef}
         aria-hidden
+        className="hero-scan"
         style={{
           position:      "fixed",
           top:           0,
@@ -207,6 +214,7 @@ export function HeroScan() {
       <div
         ref={streakRef}
         aria-hidden
+        className="hero-scan"
         style={{
           position:      "fixed",
           left:          0,
@@ -228,6 +236,7 @@ export function HeroScan() {
       <div
         ref={glowRef}
         aria-hidden
+        className="hero-scan"
         style={{
           position:      "fixed",
           top:           "26vh",

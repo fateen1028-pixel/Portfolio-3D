@@ -186,6 +186,15 @@ const RIBS = Array.from({ length: 12 }, (_, i) => -1.1 - i * RIB_GAP).filter((z)
 // still fits inside the passage: half-width 1.58 against a 1.7 wall.
 const PLANE_W = 3.16;
 const PLANE_H = 0.99;
+// The same plane, at the width a PORTRAIT frame can hold. The plates are
+// authored for the 1440x900 reading distance, where 3.16 units is about two
+// thirds of the frame; on a 390px frame that same plane is more than twice the
+// width of the viewport, so all the visitor ever sees is the middle of a word.
+// Scaling the mesh — texture and all — fits it back to the frame edge, which
+// makes the type read LARGER here than it does on a desktop rather than
+// smaller, because the plane now fills the frame instead of two thirds of it.
+// Exactly 1 at every width from 768 up.
+const PLANE_NARROW = 0.4;
 // How far the complete beat lifts each plate, CLIENT → INFRASTRUCTURE.
 // Only the nearest: see the frame loop.
 // How far the complete beat lifts each plate, CLIENT → INFRASTRUCTURE.
@@ -465,6 +474,62 @@ export function Aperture() {
       c.y += (t.y - c.y) * k;
       const vx = d > 0 ? (c.x - prevX) / d : 0;
       c.spin += (Math.abs(vx) * 0.55 - c.spin) * k;
+
+      // ── PROJECTS INTRO "O" SOLVE (narrow only) ──────────────────────────
+      // The glyph-hold keyframes were hand-solved in world units against the
+      // DESKTOP slot; on a phone the .o-slot is its own vw-sized box, so the
+      // machine parks on the LIVE rect instead, the way solveAboutDot parks
+      // on its triplet: unproject the slot's counter onto the plane the
+      // assembly sits in and let the same smoothing carry it there. Gated to
+      // the glyph-hold band — every other scroll moment, and every frame at
+      // ≥768px, runs the original expressions untouched.
+  if (
+    scrollState.narrow &&
+    scrollState.progress > 0.1938 &&
+    scrollState.progress < 0.2413
+  ) {
+        const slot = document.querySelector(".o-slot");
+        if (slot) {
+          const r = slot.getBoundingClientRect();
+          // The slot is a zero-height inline span — position H comes from the
+          // word box, not the rect; only the width matters as a guard (the
+          // reduced-motion fallback hides it entirely).
+          if (r.width > 8) {
+            const word = slot.parentElement;
+            const cv = state.gl.domElement.getBoundingClientRect();
+            if (word && cv.width > 0) {
+              const w = word.getBoundingClientRect();
+              // The bore centre rides the word's optical middle; the slot is
+              // only trusted for its horizontal counter. NDC maps through the
+              // canvas rect (innerWidth includes the scrollbar the canvas
+              // doesn't) so the machine lands in real screen space.
+              const sCx = r.left + r.width * 0.5;
+              const sCy = w.top + w.height * 0.5;
+              dotV.set(
+                ((sCx - cv.left) / cv.width) * 2 - 1,
+                -(((sCy - cv.top) / cv.height) * 2 - 1),
+                0.5
+              );
+              dotV.unproject(state.camera);
+              dotDir.subVectors(dotV, state.camera.position);
+              if (dotDir.z < -1e-4) {
+                const hit = -state.camera.position.z / dotDir.z;
+                const wx = state.camera.position.x + dotDir.x * hit;
+                const wy = state.camera.position.y + dotDir.y * hit;
+                // Housing diameter is 4.98 world units on this plane; on the
+                // desktop the rim reads 180px across a 200px slot (0.90).
+                const ppu0 =
+                  cv.height /
+                  (2 * Math.max(1, state.camera.position.z) * HALF_FOV_TAN);
+                const slotScl = (r.width * 0.9) / (2 * 2.49 * ppu0);
+                c.x += (wx - c.x) * k;
+                c.y += (wy - c.y) * k;
+                c.scl += (slotScl - c.scl) * k;
+              }
+            }
+          }
+        }
+      }
     }
     const c = cur.current;
     c.spinAngle += c.spin * d;
@@ -633,6 +698,18 @@ export function Aperture() {
     // distance correction of its own — gated on how far the aim has dropped,
     // which is zero everywhere above this chapter.
 const wide = scrollState.narrow ? Math.min(1, Math.max(0, (Math.abs(c.lookY) - 0.5) / 1.2)) : 0;
+    // The portrait wafer framing (journey.ts, `fitK`) stands this rig up to
+    // ~3.5x further back, which puts the plate well past the camera's authored
+    // far plane of 60 — it would simply be clipped away, which is exactly what
+    // a blank frame is. Raise it ONLY while that framing is in force and only
+    // on a narrow frame, so the desktop far plane is never touched.
+    if (scrollState.narrow) {
+      const f = Math.max(60, Math.abs(c.camZ) + 40);
+      if (state.camera.far !== f) {
+        state.camera.far = f;
+        state.camera.updateProjectionMatrix();
+      }
+    }
     state.camera.position.z += (c.camZ + wide * 7 - state.camera.position.z) * k;
     state.camera.position.y += (c.camY - state.camera.position.y) * k;
     // THE ABOUT CHAPTER HOLDS THE OBSERVER STILL. `aboutState.calm` is the
@@ -1024,7 +1101,7 @@ const wide = scrollState.narrow ? Math.min(1, Math.max(0, (Math.abs(c.lookY) - 0
             </mesh>
             {/* The layer itself: real type, at this depth, in the scene. */}
             {planeTex[i] && (
-              <mesh>
+              <mesh scale={scrollState.narrow ? PLANE_NARROW : 1}>
                 <planeGeometry args={[PLANE_W, PLANE_H]} />
                 <meshBasicMaterial
                   ref={(el) => { planeMats.current[i] = el; }}
