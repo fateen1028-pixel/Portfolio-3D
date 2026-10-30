@@ -754,8 +754,8 @@ export function sampleJourney(progress: number): Journey {
   // narrow one pushes most of it off the edge. `s` comes down with it so the
   // instrument stays a readable object rather than a full-bleed smear, and the
   // camera comes in a little to keep the 21-unit wafer framed.
-  const xScale = narrow ? 0.2 : 1;
-  const sScale = narrow ? 0.62 : 1;
+  const xScale = narrow ? 0.14 : 1;
+  const sScale = narrow ? 0.70 : 1;
   // lookZ falls back to the classic look-ahead so upstream keys (which
   // never set it) behave exactly as before.
   const lzA = a.state.lookZ ?? (-0.5 - a.state.spread * 2);
@@ -788,7 +788,12 @@ export function sampleJourney(progress: number): Journey {
   // settles downward on load and is gone by the orbital core lock (p 0.085),
   // where the table still wants y 0 exactly. --lens-y follows the object
   // automatically, so the scan axis sinks with it.
-  const heroSink = narrow ? 1 - smootherstep(Math.min(1, p / 0.085)) : 0;
+  const heroNarrow = narrow ? 1 - smootherstep(Math.min(1, p / 0.085)) : 0;
+  // Hero on mobile: perfectly balanced scale and sink in the lower half, clear of all text
+  const heroScaleMod = narrow ? 1 + heroNarrow * 0.18 : 1;
+  const heroTiltNarrow = narrow ? heroNarrow * -0.26 : 0;
+  const heroSinkY = narrow ? heroNarrow * 3.85 : 0;
+  const heroXMod = narrow ? 1 - heroNarrow * 0.70 : 1;
   //
   // PROJECTS: three scenes, each a full column of copy on desktop with the
   // object reframing from the opposite side. On a phone the copy takes the
@@ -820,7 +825,11 @@ export function sampleJourney(progress: number): Journey {
   // ~40px higher than the two that open on a kicker, and at -9 its title ran
   // under the instrument's lower-left arc. This clears the TALLEST scene, which
   // is the only one that has to be clear for all three to be.
-  const projectsLift = projectsFrame * -12;
+  const projectsLift = 0;
+  const projectLiftY = narrow ? projectsFrame * 2.65 : 0;
+  // During projects on mobile, allow the object to move left-to-right (xScale 0.14)
+  // toward the empty spaces with dynamic rotation and inspection yaw
+  const xNarrowMod = heroXMod;
 
   // The narrow camera pulls back a little so a portrait frame can hold a 3-unit
   // instrument and a 21-unit wafer. That offset has to be GONE by the time the
@@ -854,20 +863,21 @@ export function sampleJourney(progress: number): Journey {
   const waferFrame = narrow
     ? Math.min(1, Math.max(0, (Math.abs(lY) - 0.5) / 1.2))
     : 0;
-  const fitK = 1 + waferFrame * (scrollState.fit - 1);
+  const fitK = 1 + waferFrame * (narrow ? scrollState.fit * 0.46 - 1 : scrollState.fit - 1);
+  const footerWaferLift = narrow ? Math.max(0, Math.min(1, (p - 0.93) / 0.07)) * 2.2 : 0;
 
   const j: Journey = {
-    x:      lerp(a.state.x, b.state.x) * xScale,
-    y:      lerp(a.state.y, b.state.y) - heroSink * 1.55,
-    s:      lerp(a.state.s, b.state.s) * sScale * introBand * (1 - 0.25 * projectsFrame),
+    x:      lerp(a.state.x, b.state.x) * xScale * xNarrowMod,
+    y:      lerp(a.state.y, b.state.y) - heroSinkY + projectLiftY + footerWaferLift,
+    s:      lerp(a.state.s, b.state.s) * sScale * heroScaleMod * introBand * (1 - 0.35 * projectsFrame),
     iris:   lerp(a.state.iris, b.state.iris),
     focus:  lerp(a.state.focus, b.state.focus),
     rot:    lerp(a.rot, b.rot),
     spread: lerp(a.state.spread, b.state.spread) * (narrow ? 0.5 : 1),
     camZ:   (lerp(a.state.camZ, b.state.camZ) + camBack) * fitK,
-    camX:   lerp(a.state.x, b.state.x) * xScale * 0.3,
+    camX:   lerp(a.state.x, b.state.x) * xScale * xNarrowMod * 0.3,
     camY:   (lerp(a.state.camY ?? 0, b.state.camY ?? 0) + projectsLift) * fitK,
-    tilt:   lerp(a.state.tilt ?? 0, b.state.tilt ?? 0),
+    tilt:   lerp(a.state.tilt ?? 0, b.state.tilt ?? 0) + heroTiltNarrow,
     key:    lerp(a.state.key ?? 2.8, b.state.key ?? 2.8),
     glow:   lerp(a.state.glow, b.state.glow),
     yaw:    lerp(a.state.yaw ?? 0, b.state.yaw ?? 0),

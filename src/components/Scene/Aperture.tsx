@@ -438,6 +438,44 @@ export function Aperture() {
       });
     } else {
       const t = sampleJourney(scrollState.progress);
+      if (
+        scrollState.narrow &&
+        scrollState.progress > 0.185 &&
+        scrollState.progress < 0.245
+      ) {
+        const slot = document.querySelector(".o-slot");
+        if (slot) {
+          const r = slot.getBoundingClientRect();
+          if (r.width > 8) {
+            const word = slot.parentElement;
+            const cv = state.gl.domElement.getBoundingClientRect();
+            if (word && cv.width > 0) {
+              const w = word.getBoundingClientRect();
+              const sCx = r.left + r.width * 0.5;
+              const sCy = w.top + w.height * 0.5;
+              dotV.set(
+                ((sCx - cv.left) / cv.width) * 2 - 1,
+                -(((sCy - cv.top) / cv.height) * 2 - 1),
+                0.5
+              );
+              dotV.unproject(state.camera);
+              dotDir.subVectors(dotV, state.camera.position);
+              if (dotDir.z < -1e-4) {
+                const hit = -state.camera.position.z / dotDir.z;
+                const wx = state.camera.position.x + dotDir.x * hit;
+                const wy = state.camera.position.y + dotDir.y * hit;
+                const ppu0 =
+                  cv.height /
+                  (2 * Math.max(1, state.camera.position.z) * HALF_FOV_TAN);
+                const slotScl = (r.width * 0.9) / (2 * 2.49 * ppu0);
+                t.x = wx;
+                t.y = wy;
+                t.s = slotScl;
+              }
+            }
+          }
+        }
+      }
       const c = cur.current;
       c.iris += (t.iris - c.iris) * k;
       c.rot += (t.rot - c.rot) * k;
@@ -475,63 +513,8 @@ export function Aperture() {
       const vx = d > 0 ? (c.x - prevX) / d : 0;
       c.spin += (Math.abs(vx) * 0.55 - c.spin) * k;
 
-      // ── PROJECTS INTRO "O" SOLVE (narrow only) ──────────────────────────
-      // The glyph-hold keyframes were hand-solved in world units against the
-      // DESKTOP slot; on a phone the .o-slot is its own vw-sized box, so the
-      // machine parks on the LIVE rect instead, the way solveAboutDot parks
-      // on its triplet: unproject the slot's counter onto the plane the
-      // assembly sits in and let the same smoothing carry it there. Gated to
-      // the glyph-hold band — every other scroll moment, and every frame at
-      // ≥768px, runs the original expressions untouched.
-  if (
-    scrollState.narrow &&
-    scrollState.progress > 0.1938 &&
-    scrollState.progress < 0.2413
-  ) {
-        const slot = document.querySelector(".o-slot");
-        if (slot) {
-          const r = slot.getBoundingClientRect();
-          // The slot is a zero-height inline span — position H comes from the
-          // word box, not the rect; only the width matters as a guard (the
-          // reduced-motion fallback hides it entirely).
-          if (r.width > 8) {
-            const word = slot.parentElement;
-            const cv = state.gl.domElement.getBoundingClientRect();
-            if (word && cv.width > 0) {
-              const w = word.getBoundingClientRect();
-              // The bore centre rides the word's optical middle; the slot is
-              // only trusted for its horizontal counter. NDC maps through the
-              // canvas rect (innerWidth includes the scrollbar the canvas
-              // doesn't) so the machine lands in real screen space.
-              const sCx = r.left + r.width * 0.5;
-              const sCy = w.top + w.height * 0.5;
-              dotV.set(
-                ((sCx - cv.left) / cv.width) * 2 - 1,
-                -(((sCy - cv.top) / cv.height) * 2 - 1),
-                0.5
-              );
-              dotV.unproject(state.camera);
-              dotDir.subVectors(dotV, state.camera.position);
-              if (dotDir.z < -1e-4) {
-                const hit = -state.camera.position.z / dotDir.z;
-                const wx = state.camera.position.x + dotDir.x * hit;
-                const wy = state.camera.position.y + dotDir.y * hit;
-                // Housing diameter is 4.98 world units on this plane; on the
-                // desktop the rim reads 180px across a 200px slot (0.90).
-                const ppu0 =
-                  cv.height /
-                  (2 * Math.max(1, state.camera.position.z) * HALF_FOV_TAN);
-                const slotScl = (r.width * 0.9) / (2 * 2.49 * ppu0);
-                c.x += (wx - c.x) * k;
-                c.y += (wy - c.y) * k;
-                c.scl += (slotScl - c.scl) * k;
-              }
-            }
-          }
-        }
-      }
     }
-    const c = cur.current;
+        const c = cur.current;
     c.spinAngle += c.spin * d;
     const t = state.clock.elapsedTime;
     // Glyph stillness: the idle mechanism drift freezes while the object
@@ -722,7 +705,13 @@ const wide = scrollState.narrow ? Math.min(1, Math.max(0, (Math.abs(c.lookY) - 0
     // chapter's hand-off, so the orbit receives the observer it has always
     // had — and in the hero, where calm is 0, this is byte-for-byte the
     // expression it always was.
-    const follow = 1 - aboutState.calm;
+    const introCalm =
+      scrollState.narrow &&
+      scrollState.progress > 0.185 &&
+      scrollState.progress < 0.245
+        ? 1
+        : 0;
+    const follow = (1 - aboutState.calm) * (1 - introCalm);
     state.camera.position.x +=
       ((c.x * 0.3 + (scrollState.reducedMotion ? 0 : pointer.x * 0.2)) * follow -
         state.camera.position.x) *

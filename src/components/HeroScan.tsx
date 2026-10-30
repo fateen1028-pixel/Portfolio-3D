@@ -47,6 +47,13 @@ export function HeroScan() {
     const root = document.documentElement;
 
     const tick = () => {
+      if (scrollState.narrow) {
+        axis.style.opacity = "0";
+        focal.style.opacity = "0";
+        streak.style.opacity = "0";
+        glow.style.opacity = "0";
+        return;
+      }
       const p = scrollState.progress;
 
       // THE SCAN BELONGS TO THE HERO. scrollState.progress is HELD across the

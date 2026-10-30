@@ -499,10 +499,7 @@ button:focus-visible {
      machine the whole lower two-thirds of the frame to itself. */
   #hero .hero-field {
     align-items: flex-start;
-    /* Seated BELOW the header instead of against it: the identity block
-       clears the fixed bar by a deliberate margin, the machine owns the
-       lower half, and the two never have to negotiate for pixels. */
-    padding-top: 12vh;
+    padding-top: 9.5vh;
   }
 
   #hero .hero-identity {
@@ -620,6 +617,7 @@ button:focus-visible {
      the machine rides above it — still two masses, never copy under glass. */
   [data-present] {
     align-items: flex-end;
+    padding-top: 20vh;
     padding-bottom: 4vh;
   }
 
@@ -632,7 +630,7 @@ button:focus-visible {
 
   [data-present-inner] > .mt-6,
   [data-present-inner] > div.mt-6 {
-    margin-top: 1.15rem;
+    margin-top: 0.85rem;
   }
 
   [data-present] h3 {
@@ -735,22 +733,23 @@ button:focus-visible {
 
   /* THE FOOTER. Its reveal rides --fcap, which the canvas publishes; the
      copy still resolves on the wafer arriving, exactly as on desktop. */
-  #contact .ft-stage {
+    #contact .ft-stage {
     opacity: 1;
   }
 
-  /* The desktop block reserves 40vh under the copy, which is what keeps it
-     level with a wafer standing BESIDE it. On a phone the wafer is above, so
-     that reservation just shoves the copy into the upper third and leaves a
-     third of the frame empty above the footer bar. Released, the block
-     centres in the space that is actually its own. */
+  #contact .grid {
+    align-items: flex-end;
+    padding-top: 0;
+    padding-bottom: 2.5vh;
+  }
+
   .contact-copy {
     padding-bottom: 0;
   }
 
   .resolve-copy {
-    font-size: clamp(2.35rem, 11.2vw, 3.5rem);
-    line-height: 0.92;
+    font-size: clamp(1.45rem, 6.5vw, 2.05rem);
+    line-height: 1.05;
     text-wrap: balance;
   }
 }

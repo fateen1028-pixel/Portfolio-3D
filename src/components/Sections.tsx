@@ -349,6 +349,12 @@ export function Hero() {
               <p className="mt-3 font-mono text-[10px] tracking-[0.28em] uppercase text-[#8F8A80] opacity-70">
                 ChatY <span className="text-[#c8ff2e]">·</span> SkillForge <span className="text-[#c8ff2e]">·</span> DeployForge
               </p>
+              <div className="mt-8 flex items-center gap-3 md:hidden">
+                <span className="block h-px w-8 bg-[#c8ff2e] opacity-70" />
+                <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#8F8A80]">
+                  Scroll
+                </span>
+              </div>
             </div>
 
             {/* CENTER — negative space. The object pulls through this void.
